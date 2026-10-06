@@ -1,0 +1,18 @@
+{
+  "ia": {
+    "concluido": false,
+    "total": 0,
+    "tipos": {},
+    "ultima_atualizacao": null
+  },
+  "behance": {
+    "concluido": true,
+    "total": 120,
+    "ultima_atualizacao": "2026-10-07T00:54:19.075544"
+  },
+  "analise": {
+    "concluido": true,
+    "total_analisado": 120,
+    "ultima_atualizacao": "2026-10-07T00:57:08.334398"
+  }
+}
