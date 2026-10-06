@@ -11,6 +11,7 @@ screenshot em resolução 1440x900, guardada em data/ia/.
 """
 
 import asyncio
+import csv
 import os
 import time
 from pathlib import Path
@@ -19,7 +20,7 @@ import anthropic
 from anthropic import Anthropic
 from playwright.async_api import async_playwright
 
-from src.state import IA_DIR, atualizar_estado, marcar_concluido
+from src.state import DATA_DIR, IA_DIR, atualizar_estado, marcar_concluido
 
 # Modelo da Anthropic a utilizar
 MODELO = "claude-sonnet-4-6"
@@ -38,6 +39,27 @@ ALTURA = 900
 
 # Diretório temporário para ficheiros HTML
 HTML_DIR = IA_DIR / "html"
+
+# Registo dos tokens usados em cada pedido (para calcular o custo real)
+TOKENS_CSV = DATA_DIR / "ia_tokens.csv"
+
+
+def registar_tokens(tipo: str, resposta) -> None:
+    """Acrescenta ao CSV os tokens de entrada e saída de um pedido.
+
+    Args:
+        tipo: Tipo de página gerada.
+        resposta: Resposta da API do Claude.
+    """
+    novo = not TOKENS_CSV.exists()
+    with open(TOKENS_CSV, "a", newline="", encoding="utf-8") as f:
+        escritor = csv.writer(f)
+        if novo:
+            escritor.writerow(["data", "tipo", "modelo", "tokens_entrada", "tokens_saida", "stop_reason"])
+        escritor.writerow([
+            time.strftime("%Y-%m-%d %H:%M:%S"), tipo, resposta.model,
+            resposta.usage.input_tokens, resposta.usage.output_tokens, resposta.stop_reason,
+        ])
 
 
 def construir_prompt(tipo: str) -> str:
@@ -100,6 +122,8 @@ def gerar_html_com_claude(api_key: str, tipo: str) -> str | None:
     except anthropic.APIError as e:
         print(f"Erro ao gerar HTML com Claude para '{tipo}': {e}")
         return None
+
+    registar_tokens(tipo, resposta)
 
     if resposta.stop_reason == "max_tokens":
         print(f"Resposta do Claude para '{tipo}' cortada por max_tokens; descartada.")
