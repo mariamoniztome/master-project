@@ -15,13 +15,14 @@ import os
 import time
 from pathlib import Path
 
+import anthropic
 from anthropic import Anthropic
 from playwright.async_api import async_playwright
 
 from src.state import IA_DIR, atualizar_estado, marcar_concluido
 
 # Modelo da Anthropic a utilizar
-MODELO = "claude-sonnet-4-5-20250514"
+MODELO = "claude-sonnet-4-6"
 
 # Tipos de página a gerar e respetiva quantidade
 TIPOS_PAGINA = {
@@ -69,27 +70,43 @@ def construir_prompt(tipo: str) -> str:
 def gerar_html_com_claude(api_key: str, tipo: str) -> str | None:
     """Envia a prompt ao Claude e recebe o HTML gerado.
 
+    Erros de configuração (API key inválida, sem permissões, modelo
+    inexistente, pedido inválido) são relançados para aparecerem na
+    interface, em vez de falharem silenciosamente 120 vezes.
+
     Args:
         api_key: Chave de API da Anthropic.
         tipo: Tipo de página a gerar.
 
     Returns:
-        String com o código HTML, ou None em caso de erro.
+        String com o código HTML, ou None em caso de erro temporário ou
+        resposta incompleta.
     """
     try:
-        cliente = Anthropic(api_key=api_key)
+        cliente = Anthropic(api_key=api_key.strip())
         prompt = construir_prompt(tipo)
         resposta = cliente.messages.create(
             model=MODELO,
-            max_tokens=4096,
+            max_tokens=16000,
             messages=[{"role": "user", "content": prompt}],
         )
-        # Extrai o texto da resposta
-        html = resposta.content[0].text
-        return html
-    except Exception as e:
+    except (
+        anthropic.AuthenticationError,
+        anthropic.PermissionDeniedError,
+        anthropic.NotFoundError,
+        anthropic.BadRequestError,
+    ):
+        raise
+    except anthropic.APIError as e:
         print(f"Erro ao gerar HTML com Claude para '{tipo}': {e}")
         return None
+
+    if resposta.stop_reason == "max_tokens":
+        print(f"Resposta do Claude para '{tipo}' cortada por max_tokens; descartada.")
+        return None
+
+    # Junta os blocos de texto da resposta
+    return "".join(bloco.text for bloco in resposta.content if bloco.type == "text")
 
 
 def limpar_html(html: str) -> str:

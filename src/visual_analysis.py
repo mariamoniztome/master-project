@@ -24,13 +24,10 @@ import numpy as np
 from PIL import Image
 from sklearn.cluster import KMeans
 
-from src.state import IA_DIR, HUMANAS_DIR, RESULTADOS_DIR, atualizar_estado, marcar_concluido
+from src.state import CSV_PATH, IA_DIR, HUMANAS_DIR, RESULTADOS_DIR, atualizar_estado, marcar_concluido
 
 # Número de cores dominantes a extrair
 NUM_CORES = 5
-
-# Caminho do ficheiro CSV de resultados
-CSV_PATH = RESULTADOS_DIR / "resultados.csv"
 
 # Cabeçalho do CSV
 COLUNAS_CSV = [

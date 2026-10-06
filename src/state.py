@@ -19,6 +19,7 @@ DATA_DIR = BASE_DIR / "data"
 IA_DIR = DATA_DIR / "ia"
 HUMANAS_DIR = DATA_DIR / "humanas"
 RESULTADOS_DIR = DATA_DIR / "resultados"
+CSV_PATH = RESULTADOS_DIR / "resultados.csv"
 
 # Ficheiro de estado persistente
 STATE_FILE = DATA_DIR / "estado.json"
