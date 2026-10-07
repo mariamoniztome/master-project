@@ -1,8 +1,13 @@
 {
   "ia": {
     "concluido": false,
-    "total": 0,
-    "tipos": {},
+    "total": 42,
+    "tipos": {
+      "landing_page": 11,
+      "dashboard": 11,
+      "formulario_contacto": 10,
+      "pagina_produto": 10
+    },
     "ultima_atualizacao": null
   },
   "behance": {
@@ -12,7 +17,7 @@
   },
   "analise": {
     "concluido": true,
-    "total_analisado": 120,
-    "ultima_atualizacao": "2026-10-07T00:57:08.334398"
+    "total_analisado": 162,
+    "ultima_atualizacao": "2026-10-07T01:26:32.968917"
   }
 }

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Contacto</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 600px;
+      overflow: hidden;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 40px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .form-header .icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 28px;
+    }
+
+    .form-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .form-header p {
+      font-size: 15px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .form-body {
+      padding: 40px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 7px;
+      letter-spacing: 0.3px;
+    }
+
+    .form-group label .required {
+      color: #ef4444;
+      margin-left: 3px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #111827;
+      background: #f9fafb;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #667eea;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+    }
+
+    .form-group input:valid:not(:placeholder-shown),
+    .form-group textarea:valid:not(:placeholder-shown) {
+      border-color: #10b981;
+      background: #ffffff;
+    }
+
+    .form-group input:invalid:not(:placeholder-shown):not(:focus),
+    .form-group textarea:invalid:not(:placeholder-shown):not(:focus) {
+      border-color: #ef4444;
+      background: #fff5f5;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 44px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .form-group .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .checkbox-group {
+      margin-bottom: 22px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      border: 2px solid #d1d5db;
+      border-radius: 5px;
+      cursor: pointer;
+      accent-color: #667eea;
+      margin-top: 1px;
+    }
+
+    .checkbox-group a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .checkbox-group a:hover {
+      text-decoration: underline;
+    }
+
+    .radio-group {
+      margin-bottom: 22px;
+    }
+
+    .radio-group .radio-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .radio-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #4b5563;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      background: #f9fafb;
+    }
+
+    .radio-option input[type="radio"] {
+      accent-color: #667eea;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .radio-option:has(input:checked) {
+      border-color: #667eea;
+      background: #eef2ff;
+      color: #4338ca;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 1px;
+      background: #f3f4f6;
+      margin: 10px 0 24px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .submit-btn:hover {
+      opacity: 0.92;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0px);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .form-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .contact-info {
+      background: #f8f9ff;
+      border-top: 1px solid #e5e7eb;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .contact-item .ci-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .contact-item .ci-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .contact-item .ci-text span {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    @media (max-width: 520px) {
+      .form-header {
+        padding: 30px 24px 24px;
+      }
+
+      .form-body {
+        padding: 28px 24px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .contact-info {
+        padding: 20px 24px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .form-header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="form-header">
+      <div class="icon">✉️</div>
+      <h1>Fale Connosco</h1>
+      <p>Preencha o formulário abaixo e entraremos em contacto consigo o mais brevemente possível.</p>
+    </div>
+
+    <form action="#" method="POST" novalidate>
+      <div class="form-body">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="primeiro-nome">
+              Primeiro Nome <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="primeiro-nome"
+              name="primeiro_nome"
+              placeholder="João"
+              required
+              minlength="2"
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <label for="ultimo-nome">
+              Último Nome <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              id="ultimo-nome"
+              name="ultimo_nome"
+              placeholder="Silva"
+              required
+              minlength="2"
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">
+            Endereço de Email <span class="required">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="joao.silva@exemplo.com"
+            required
+            autocomplete="email"
+          >
+          <span class="hint">Nunca partilharemos o seu email com terceiros.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telefone">Número de Telefone</label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              placeholder="+351 912 345 678"
+              autocomplete="tel"
+              pattern="[\+0-9\s\-\(\)]{7,20}"
+            >
+          </div>
+          <div class="form-group">
+            <label for="empresa">Empresa / Organização</label>
+            <input
+              type="text"
+              id="empresa"
+              name="empresa"
+              placeholder="Nome da empresa"
+              autocomplete="organization"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="assunto">
+            Assunto <span class="required">*</span>
+          </label>
+          <select id="assunto" name="assunto" required>
+            <option value="" disabled selected>Selecione um assunto...</option>
+            <option value="informacao">Pedido de Informação</option>
+            <option value="suporte">Suporte Técnico</option>
+            <option value="orcamento">Pedido de Orçamento</option>
+            <option value="parceria">Proposta de Parceria</option>
+            <option value="reclamacao">Reclamação</option>
+            <option value="elogio">Elogio / Sugestão</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="radio-group">
+          <span class="radio-label">Prioridade do Contacto</span>
+          <div class="radio-options">
+            <label class="radio-option">
+              <input type="radio" name="prioridade" value="baixa">
+              🟢 Baixa
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="prioridade" value="normal" checked>
+              🟡 Normal
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="prioridade" value="alta">
+              🟠 Alta
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="prioridade" value="urgente">
+              🔴 Urgente
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mensagem">
+            Mensagem <span class="required">*</span>
+          </label>
+          <textarea
+            id="mensagem"
+            name="mensagem"
+            placeholder="Descreva a sua questão ou mensagem com o máximo de detalhe possível..."
+            required
+            minlength="20"
+            maxlength="2000"
+          ></textarea>
+          <span class="hint">Mínimo de 20 caracteres. Máximo de 2000 caracteres.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="como-conheceu">Como nos conheceu?</label>
+          <select id="como-conheceu" name="como_conheceu">
+            <option value="" disabled selected>Selecione uma opção...</option>
+            <option value="pesquisa">Motor de Pesquisa (Google, Bing...)</option>
+            <option value="redes-sociais">Redes Sociais</option>
+            <option value="recomendacao">Recomendação de amigo/colega</option>
+            <option value="publicidade">Publicidade online</option>
+            <option value="evento">Evento ou conferência</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="newsletter" value="sim">
+            Desejo receber a newsletter com novidades, dicas e ofertas exclusivas.
+          </label>
+        </div>
+
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="termos" required>
+            Li e aceito os <a href="#">Termos e Condições</a> e a <a href="#">Política de Privacidade</a>. <span style="color:#ef4444;">*</span>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          📨 &nbsp; Enviar Mensagem
+        </button>
+
+        <div class="form-footer">
+          <span>🔒 Os seus dados estão protegidos e encriptados com SSL.</span>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="ci-icon">📍</div>
+        <div class="ci-text">
+          <strong>Morada</strong>
+          <span>Rua Exemplo, 123, Lisboa</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">📞</div>
+        <div class="ci-text">
+          <strong>Telefone</strong>
+          <span>+351 210 000 000</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">🕐</div>
+        <div class="ci-text">
+          <strong>Horário</strong>
+          <span>Seg–Sex: 9h–18h</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

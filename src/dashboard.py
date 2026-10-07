@@ -89,11 +89,12 @@ def mostrar_metricas_gerais(df: pd.DataFrame) -> None:
     st.info(f"Data da análise: {pd.Timestamp.now().strftime('%d/%m/%Y %H:%M')}")
 
 
-def gerar_boxplots(df: pd.DataFrame) -> None:
+def gerar_boxplots(df: pd.DataFrame, por: str = "grupo") -> None:
     """Gera boxplots comparando os dois grupos em cada dimensão.
 
     Args:
         df: DataFrame com os resultados.
+        por: Coluna usada para separar as caixas ("grupo" ou "tipo").
     """
     import streamlit as st
 
@@ -112,7 +113,12 @@ def gerar_boxplots(df: pd.DataFrame) -> None:
 
     for i, metrica in enumerate(metricas_boxplot):
         ax = axes[i]
-        sns.boxplot(data=df, x="grupo", y=metrica, ax=ax, palette={"ia": "#4A90D9", "humana": "#D97706"})
+        if por == "grupo":
+            sns.boxplot(data=df, x="grupo", y=metrica, hue="grupo", ax=ax, legend=False,
+                        palette={"ia": "#4A90D9", "humana": "#D97706"})
+        else:
+            sns.boxplot(data=df, x=por, y=metrica, hue=por, ax=ax, legend=False)
+            ax.tick_params(axis="x", labelrotation=20)
         ax.set_title(DIMENSOES.get(metrica, metrica), fontsize=11)
         ax.set_xlabel("")
         ax.set_ylabel("")
@@ -221,11 +227,12 @@ def mostrar_tabela_estatistica(df: pd.DataFrame) -> None:
     st.dataframe(tabela, use_container_width=True, hide_index=True)
 
 
-def gerar_scatter_pca(df: pd.DataFrame) -> None:
+def gerar_scatter_pca(df: pd.DataFrame, por: str = "grupo") -> None:
     """Gera um scatter plot PCA mostrando a distribuição dos dois grupos em 2D.
 
     Args:
         df: DataFrame com os resultados.
+        por: Coluna usada para colorir os pontos ("grupo" ou "tipo").
     """
     import streamlit as st
 
@@ -251,13 +258,18 @@ def gerar_scatter_pca(df: pd.DataFrame) -> None:
     df_pca = pd.DataFrame({
         "PC1": componentes[:, 0],
         "PC2": componentes[:, 1],
-        "grupo": df.loc[dados_numericos.index, "grupo"].values,
+        "categoria": df.loc[dados_numericos.index, por].values,
     })
 
     fig, ax = plt.subplots(figsize=(10, 7))
-    for grupo, cor in [("ia", "#4A90D9"), ("humana", "#D97706")]:
-        subset = df_pca[df_pca["grupo"] == grupo]
-        ax.scatter(subset["PC1"], subset["PC2"], label=grupo.upper(), alpha=0.6, color=cor, s=50)
+    if por == "grupo":
+        cores = [("ia", "#4A90D9"), ("humana", "#D97706")]
+    else:
+        categorias = sorted(df_pca["categoria"].unique())
+        cores = list(zip(categorias, sns.color_palette("muted", len(categorias))))
+    for categoria, cor in cores:
+        subset = df_pca[df_pca["categoria"] == categoria]
+        ax.scatter(subset["PC1"], subset["PC2"], label=str(categoria).upper(), alpha=0.6, color=cor, s=50)
 
     ax.set_xlabel(f"PC1 ({pca.explained_variance_ratio_[0]:.1%} variância)", fontsize=12)
     ax.set_ylabel(f"PC2 ({pca.explained_variance_ratio_[1]:.1%} variância)", fontsize=12)
@@ -407,8 +419,53 @@ def mostrar_exportacao(df: pd.DataFrame) -> None:
             st.error(f"Erro ao gerar PDF: {e}")
 
 
-def mostrar_dashboard() -> None:
-    """Função principal que renderiza o dashboard completo."""
+def adicionar_tipo(df: pd.DataFrame) -> pd.DataFrame:
+    """Acrescenta a coluna "tipo" (tipo de página) a partir do nome do ficheiro.
+
+    Ex.: "humana_landing_page_003.png" e "landing_page_003.png" dão
+    "landing_page".
+
+    Args:
+        df: DataFrame com os resultados.
+
+    Returns:
+        DataFrame com a coluna "tipo".
+    """
+    df = df.copy()
+    df["tipo"] = (
+        df["ficheiro"]
+        .str.replace(r"^humana_", "", regex=True)
+        .str.replace(r"_\d+\.\w+$", "", regex=True)
+    )
+    return df
+
+
+def mostrar_estatistica_descritiva(df: pd.DataFrame) -> None:
+    """Mostra média, desvio-padrão, mediana, mínimo e máximo por grupo.
+
+    Args:
+        df: DataFrame com os resultados.
+    """
+    import streamlit as st
+
+    st.subheader("Estatística Descritiva")
+    tabela = (
+        df.groupby("grupo")[METRICAS_TESTE]
+        .agg(["mean", "std", "median", "min", "max"])
+        .T.rename(index=DIMENSOES, level=0)
+        .rename(index={"mean": "média", "std": "desvio-padrão", "median": "mediana",
+                       "min": "mínimo", "max": "máximo"}, level=1)
+    )
+    st.dataframe(tabela.round(3), use_container_width=True)
+
+
+def mostrar_dashboard(modo_teste: bool = False) -> None:
+    """Função principal que renderiza o dashboard completo.
+
+    Args:
+        modo_teste: Se True, mostra os resultados mesmo com um só grupo,
+            comparando os tipos de página em vez de IA vs humanos.
+    """
     import streamlit as st
 
     st.header("Dashboard de Resultados")
@@ -416,6 +473,37 @@ def mostrar_dashboard() -> None:
     df = carregar_dados()
     if df is None or len(df) == 0:
         st.error("Nenhum resultado encontrado. Execute a análise primeiro.")
+        return
+
+    if modo_teste:
+        df = adicionar_tipo(df)
+        st.info(
+            "Modo teste: resultados descritivos dos grupos disponíveis, com os "
+            "tipos de página comparados entre si. Os testes IA vs humanos "
+            "só aparecem com os dois grupos e o modo teste desligado."
+        )
+        mostrar_metricas_gerais(df)
+        st.divider()
+        mostrar_estatistica_descritiva(df)
+        st.divider()
+        gerar_boxplots(df, por="tipo")
+        st.divider()
+        gerar_scatter_pca(df, por="tipo")
+        st.divider()
+        mostrar_galeria()
+        st.divider()
+        mostrar_exportacao(df)
+        return
+
+    # Os gráficos e testes estatísticos comparam os dois grupos
+    grupos = set(df["grupo"].unique())
+    em_falta = {"ia", "humana"} - grupos
+    if em_falta:
+        nomes = {"ia": "IA", "humana": "humanas"}
+        st.warning(
+            f"Os resultados não incluem interfaces {' nem '.join(nomes[g] for g in sorted(em_falta))}. "
+            "Gere as interfaces em falta e volte a correr a análise (secção 3)."
+        )
         return
 
     mostrar_metricas_gerais(df)

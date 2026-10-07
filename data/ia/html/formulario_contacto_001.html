@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Contacto</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 600px;
+      overflow: hidden;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 40px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .form-header .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .form-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .form-header p {
+      font-size: 15px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .form-body {
+      padding: 40px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 7px;
+      letter-spacing: 0.3px;
+    }
+
+    .form-group label .required {
+      color: #ef4444;
+      margin-left: 3px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      color: #1f2937;
+      background-color: #f9fafb;
+      transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #667eea;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    }
+
+    .form-group input:valid:not(:placeholder-shown),
+    .form-group select:valid,
+    .form-group textarea:valid:not(:placeholder-shown) {
+      border-color: #10b981;
+      background-color: #f0fdf4;
+    }
+
+    .form-group input:invalid:not(:placeholder-shown):not(:focus),
+    .form-group textarea:invalid:not(:placeholder-shown):not(:focus) {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '▾';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      pointer-events: none;
+      font-size: 16px;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      padding-right: 40px;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 1px;
+      border: 2px solid #e5e7eb;
+      border-radius: 5px;
+      cursor: pointer;
+      accent-color: #667eea;
+      background-color: #f9fafb;
+    }
+
+    .checkbox-group label {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .checkbox-group label a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .checkbox-group label a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 15px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: opacity 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-submit:hover {
+      opacity: 0.92;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .form-footer p {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .form-footer .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .form-footer .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .form-footer .contact-item span.emoji {
+      font-size: 15px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .divider span {
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 520px) {
+      .form-body {
+        padding: 28px 24px;
+      }
+
+      .form-header {
+        padding: 30px 24px 24px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="form-header">
+      <span class="icon">✉️</span>
+      <h1>Entre em Contacto</h1>
+      <p>Preencha o formulário abaixo e responderemos o mais brevemente possível.</p>
+    </div>
+
+    <div class="form-body">
+      <form action="#" method="POST" novalidate>
+
+        <div class="divider"><span>Informações Pessoais</span></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">Primeiro Nome <span class="required">*</span></label>
+            <input
+              type="text"
+              id="first-name"
+              name="first_name"
+              placeholder="João"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <label for="last-name">Apelido <span class="required">*</span></label>
+            <input
+              type="text"
+              id="last-name"
+              name="last_name"
+              placeholder="Silva"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Endereço de Email <span class="required">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="joao.silva@exemplo.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Número de Telefone</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="+351 912 345 678"
+            pattern="[\+\d\s\-\(\)]{7,20}"
+            autocomplete="tel"
+          >
+        </div>
+
+        <div class="divider"><span>Detalhes da Mensagem</span></div>
+
+        <div class="form-group">
+          <label for="subject">Assunto <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="subject" name="subject" required>
+              <option value="" disabled selected>Selecione um assunto...</option>
+              <option value="informacao">Pedido de Informação</option>
+              <option value="suporte">Suporte Técnico</option>
+              <option value="orcamento">Pedido de Orçamento</option>
+              <option value="parceria">Proposta de Parceria</option>
+              <option value="reclamacao">Reclamação</option>
+              <option value="sugestao">Sugestão</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="company">Empresa / Organização</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            placeholder="Nome da empresa (opcional)"
+            maxlength="100"
+            autocomplete="organization"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="message">Mensagem <span class="required">*</span></label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Escreva aqui a sua mensagem de forma detalhada..."
+            required
+            minlength="10"
+            maxlength="2000"
+          ></textarea>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+          <label for="newsletter">
+            Desejo receber novidades e atualizações por email.
+          </label>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="privacy" name="privacy" required>
+          <label for="privacy">
+            Li e aceito a <a href="#">Política de Privacidade</a> e os <a href="#">Termos e Condições</a>. <span class="required" style="color:#ef4444;">*</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Enviar Mensagem →
+        </button>
+
+        <div class="form-footer">
+          <p>Ou contacte-nos diretamente através de:</p>
+          <div class="contact-info">
+            <div class="contact-item">
+              <span class="emoji">📧</span>
+              <span>geral@exemplo.pt</span>
+            </div>
+            <div class="contact-item">
+              <span class="emoji">📞</span>
+              <span>+351 210 000 000</span>
+            </div>
+            <div class="contact-item">
+              <span class="emoji">🕐</span>
+              <span>Seg–Sex, 9h–18h</span>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg-main: #0f1117;
+    --bg-card: #1a1d27;
+    --bg-card2: #1e2130;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text-primary: #e8eaf6;
+    --text-secondary: #9094a8;
+    --border: #2a2d3e;
+    --sidebar-w: 240px;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  aside {
+    width: var(--sidebar-w);
+    background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+
+  .logo {
+    padding: 28px 24px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-text span {
+    color: var(--accent);
+  }
+
+  nav {
+    padding: 20px 12px;
+    flex: 1;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    padding: 0 12px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 2px;
+    cursor: pointer;
+  }
+
+  nav a:hover {
+    background: rgba(108,99,255,0.1);
+    color: var(--text-primary);
+  }
+
+  nav a.active {
+    background: linear-gradient(90deg, rgba(108,99,255,0.25), rgba(108,99,255,0.05));
+    color: #fff;
+    border-left: 3px solid var(--accent);
+  }
+
+  .nav-icon {
+    font-size: 17px;
+    width: 22px;
+    text-align: center;
+  }
+
+  .badge {
+    margin-left: auto;
+    background: var(--accent2);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  .sidebar-footer {
+    padding: 20px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #ff6584);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-name {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-role {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .dot-online {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent3);
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── TOPBAR ── */
+  header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .page-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-left: 4px;
+  }
+
+  .breadcrumb span {
+    color: var(--accent);
+  }
+
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-bar {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    width: 220px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .notif-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    background: var(--accent2);
+    border-radius: 50%;
+    border: 1.5px solid var(--bg-card);
+  }
+
+  .avatar-sm {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #ff6584);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    padding: 32px;
+    flex: 1;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .btn {
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  /* ── KPI CARDS ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .kpi-card:nth-child(1)::after { background: var(--accent); }
+  .kpi-card:nth-child(2)::after { background: var(--accent2); }
+  .kpi-card:nth-child(3)::after { background: var(--accent3); }
+  .kpi-card:nth-child(4)::after { background: var(--accent4); }
+
+  .kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .kpi-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .kpi-icon.purple { background: rgba(108,99,255,0.15); }
+  .kpi-icon.pink   { background: rgba(255,101,132,0.15); }
+  .kpi-icon.green  { background: rgba(67,233,123,0.15); }
+  .kpi-icon.orange { background: rgba(247,151,30,0.15); }
+
+  .kpi-value {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+
+  .kpi-trend {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .trend-up   { color: var(--accent3); }
+  .trend-down { color: var(--accent2); }
+
+  .trend-label {
+    color: var(--text-secondary);
+  }
+
+  /* ── MINI BAR CHART (CSS only) ── */
+  .mini-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 32px;
+    margin-top: 12px;
+  }
+
+  .mini-bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    opacity: 0.5;
+  }
+
+  .mini-bar.active { opacity: 1; }
+
+  .kpi-card:nth-child(1) .mini-bar { background: var(--accent); }
+  .kpi-card:nth-child(2) .mini-bar { background: var(--accent2); }
+  .kpi-card:nth-child(3) .mini-bar { background: var(--accent3); }
+  .kpi-card:nth-child(4) .mini-bar { background: var(--accent4); }
+
+  /* ── MAIN GRID ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  /* ── BAR CHART ── */
+  .chart-area {
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex: 1;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chart-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .bar-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    width: 100%;
+    height: 160px;
+    justify-content: center;
+  }
+
+  .bar {
+    flex: 1;
+    border-radius: 6px 6px 0 0;
+    max-width: 18px;
+    transition: opacity 0.2s;
+  }
+
+  .bar-a { background: linear-gradient(180deg, var(--accent), rgba(108,99,255,0.4)); }
+  .bar-b { background: linear-gradient(180deg, var(--accent2), rgba(255,101,132,0.4)); }
+
+  .chart-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 14px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  /* ── DONUT CHART (CSS) ── */
+  .donut-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .donut {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+
+  .donut svg {
+    transform: rotate(-90deg);
+    width: 160px;
+    height: 160px;
+  }
+
+  .donut-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 16;
+  }
+
+  .donut-seg {
+    fill: none;
+    stroke-width: 16;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s;
+  }
+
+  .donut-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-center-val {
+    font-size: 26px;
+    font-weight: 800;
+    display: block;
+  }
+
+  .donut-center-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .donut-legend {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .donut-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .dl-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+
+  .dl-val {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .dl-bar {
+    width: 60px;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .dl-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  /* ── BOTTOM GRID ── */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* ── TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .data-table td {
+    padding: 13px 12px;
+    border-bottom: 1px solid rgba(42,45,62,0.5);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    background: rgba(108,99,255,0.04);
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    gap: 5px;
+  }
+
+  .status-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .s-active  { background: rgba(67,233,123,0.12); color: var(--accent3); }
+  .s-active::before { background: var(--accent3); }
+  .s-pending { background: rgba(247,151,30,0.12); color: var(--accent4); }
+  .s-pending::before { background: var(--accent4); }
+  .s-inactive{ background: rgba(255,101,132,0.12); color: var(--accent2); }
+  .s-inactive::before{ background: var(--accent2); }
+
+  .prog-bar {
+    width: 80px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  /* ── ACTIVITY FEED ── */
+  .activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .activity-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(42,45,62,0.5);
+    position: relative;
+  }
+
+  .activity-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .activity-line {
+    position: absolute;
+    left: 19px;
+    top: 46px;
+    bottom: -14px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .activity-item:last-child .activity-line {
+    display: none;
+  }
+
+  .act-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .act-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .act-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .act-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+
+  .act-time {
+    font-size: 11px;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  /* ── PROGRESS SECTION ── */
+  .progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .prog-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .prog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .prog-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .prog-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .prog-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .prog-val {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .prog-meta {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* ── TOP ROW OF BOTTOM ── */
+  .three-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .stat-mini {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stat-mini-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .stat-mini-body {}
+
+  .stat-mini-val {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .stat-mini-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .stat-mini-sub {
+    font-size: 11px;
+    margin-top: 4px;
+  }
+
+  /* ── LINE CHART CSS ── */
+  .line-chart-wrap {
+    position: relative;
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    margin-top: 16px;
+  }
+
+  .line-chart-svg {
+    width: 100%;
+    height: 140px;
+    overflow: visible;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1200px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .three-grid { grid-template-columns: 1fr 1fr; }
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 64px; }
+    .logo-text, .nav-label, nav a span, .user-info, .dot-online, .badge { display: none; }
+    nav a { justify-content: center; padding: 12px; }
+    .logo { justify-content: center; }
+    .bottom-grid { grid-template-columns: 1fr; }
+    .content { padding: 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .three-grid { grid-template-columns: 1fr; }
+    header { padding: 0 16px; }
+    .search-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─────────────────── SIDEBAR ─────────────────── -->
+<aside>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Nova<span>Dash</span></div>
+  </div>
+
+  <nav>
+    <div class="nav-label">Principal</div>
+    <a href="#" class="active">
+      <span class="nav-icon">🏠</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">📊</span>
+      <span>Análises</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">📁</span>
+      <span>Projetos</span>
+      <span class="badge">4</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">👥</span>
+      <span>Equipa</span>
+    </a>
+
+    <div class="nav-label">Gestão</div>
+    <a href="#">
+      <span class="nav-icon">💰</span>
+      <span>Finanças</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">🛒</span>
+      <span>Vendas</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">📦</span>
+      <span>Inventário</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">📋</span>
+      <span>Relatórios</span>
+      <span class="badge">2</span>
+    </a>
+
+    <div class="nav-label">Sistema</div>
+    <a href="#">
+      <span class="nav-icon">🔔</span>
+      <span>Notificações</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">⚙️</span>
+      <span>Definições</span>
+    </a>
+    <a href="#">
+      <span class="nav-icon">❓</span>
+      <span>Suporte</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="avatar">AN</div>
+      <div class="user-info">
+        <div class="user-name">Ana Nunes</div>
+        <div class="user-role">Administradora</div>
+      </div>
+      <div class="dot-online"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- ─────────────────── MAIN ─────────────────── -->
+<main>
+
+  <!-- TOPBAR -->
+  <header>
+    <div>
+      <div class="page-title">Dashboard</div>
+      <div class="breadcrumb">Início / <span>Visão Geral</span></div>
+    </div>
+    <div class="header-right">
+      <div class="search-bar">
+        <span>🔍</span>
+        <span>Pesquisar…</span>
+      </div>
+      <div class="icon-btn">
+        🔔
+        <div class="notif-dot"></div>
+      </div>
+      <div class="icon-btn">💬</div>
+      <div class="avatar-sm">AN</div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- Welcome -->
+    <div class="section-header" style="margin-bottom:28px;">
+      <div>
+        <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;">Bom dia, Ana 👋</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Aqui está um resumo do desempenho de hoje — <strong style="color:var(--accent);">tudo corre bem!</strong></div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <a href="#" class="btn btn-outline">📅 Jun 2025</a>
+        <a href="#" class="btn btn-primary">＋ Novo Relatório</a>
+      </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-label">Receita Total</div>
+          <div class="kpi-icon purple">💜</div>
+        </div>
+        <div class="kpi-value">€ 84.270</div>
+        <div class="kpi-trend trend-up">
+          ▲ 12,4%
+          <span class="trend-label">vs mês anterior</span>
+        </div>
+        <div class="mini-bars">
+          <div class="mini-bar" style="height:40%"></div>
+          <div class="mini-bar" style="height:60%"></div>
+          <div class="mini-bar" style="height:45%"></div>
+          <div class="mini-bar" style="height:75%"></div>
+          <div class="mini-bar" style="height:55%"></div>
+          <div class="mini-bar" style="height:80%"></div>
+          <div class="mini-bar active" style="height:100%"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-label">Novos Clientes</div>
+          <div class="kpi-icon pink">🩷</div>
+        </div>
+        <div class="kpi-value">1.348</div>
+        <div class="kpi-trend trend-up">
+          ▲ 8,1%
+          <span class="trend-label">vs mês anterior</span>
+        </div>
+        <div class="mini-bars">
+          <div class="mini-bar" style="height:50%"></div>
+          <div class="mini-bar" style="height:35%"></div>
+          <div class="mini-bar" style="height:70%"></div>
+          <div class="mini-bar" style="height:55%"></div>
+          <div class="mini-bar" style="height:90%"></div>
+          <div class="mini-bar" style="height:65%"></div>
+          <div class="mini-bar active" style="height:100%"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-label">Taxa Conversão</div>
+          <div class="kpi-icon green">💚</div>
+        </div>
+        <div class="kpi-value">3,86%</div>
+        <div class="kpi-trend trend-down">
+          ▼ 0,3%
+          <span class="trend-label">vs mês anterior</span>
+        </div>
+        <div class="mini-bars">
+          <div class="mini-bar" style="height:80%"></div>
+          <div class="mini-bar" style="height:100%"></div>
+          <div class="mini-bar" style="height:70%"></div>
+          <div class="mini-bar" style="height:85%"></div>
+          <div class="mini-bar" style="height:60%"></div>
+          <div class="mini-bar" style="height:75%"></div>
+          <div class="mini-bar active" style="height:65%"></div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-top">
+          <div class="kpi-label">Ticket Médio</div>
+          <div class="kpi-icon orange">🧡</div>
+        </div>
+        <div class="kpi-value">€ 62,50</div>
+        <div class="kpi-trend trend-up">
+          ▲ 5,2%
+          <span class="trend-label">vs mês anterior</span>
+        </div>
+        <div class="mini-bars">
+          <div class="mini-bar" style="height:55%"></div>
+          <div class="mini-bar" style="height:45%"></div>
+          <div class="mini-bar" style="height:65%"></div>
+          <div class="mini-bar" style="height:75%"></div>
+          <div class="mini-bar" style="height:85%"></div>
+          <div class="mini-bar" style="height:90%"></div>
+          <div class="mini-bar active" style="height:100%"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="main-grid">
+
+      <!-- Bar Chart Card -->
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Receita vs Despesas</div>
+            <div class="section-sub">Comparação mensal — 2025</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <a href="#" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">Semana</a>
+            <a href="#" class="btn btn-primary" style="padding:6px 12px;font-size:11px;">Mês</a>
+            <a href="#" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">Ano</a>
+          </div>
+        </div>
+
+        <div class="chart-area">
+          <div class="chart-bars">
+            <!-- Jan -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:62%"></div>
+                <div class="bar bar-b" style="height:45%"></div>
+              </div>
+              <div class="chart-label">Jan</div>
+            </div>
+            <!-- Fev -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:75%"></div>
+                <div class="bar bar-b" style="height:52%"></div>
+              </div>
+              <div class="chart-label">Fev</div>
+            </div>
+            <!-- Mar -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:58%"></div>
+                <div class="bar bar-b" style="height:40%"></div>
+              </div>
+              <div class="chart-label">Mar</div>
+            </div>
+            <!-- Abr -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:88%"></div>
+                <div class="bar bar-b" style="height:61%"></div>
+              </div>
+              <div class="chart-label">Abr</div>
+            </div>
+            <!-- Mai -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:70%"></div>
+                <div class="bar bar-b" style="height:48%"></div>
+              </div>
+              <div class="chart-label">Mai</div>
+            </div>
+            <!-- Jun -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:100%"></div>
+                <div class="bar bar-b" style="height:68%"></div>
+              </div>
+              <div class="chart-label">Jun</div>
+            </div>
+            <!-- Jul -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:82%"></div>
+                <div class="bar bar-b" style="height:55%"></div>
+              </div>
+              <div class="chart-label">Jul</div>
+            </div>
+            <!-- Ago -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:91%"></div>
+                <div class="bar bar-b" style="height:63%"></div>
+              </div>
+              <div class="chart-label">Ago</div>
+            </div>
+            <!-- Set -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:77%"></div>
+                <div class="bar bar-b" style="height:50%"></div>
+              </div>
+              <div class="chart-label">Set</div>
+            </div>
+            <!-- Out -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:68%"></div>
+                <div class="bar bar-b" style="height:44%"></div>
+              </div>
+              <div class="chart-label">Out</div>
+            </div>
+            <!-- Nov -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:85%"></div>
+                <div class="bar bar-b" style="height:58%"></div>
+              </div>
+              <div class="chart-label">Nov</div>
+            </div>
+            <!-- Dez -->
+            <div class="chart-col">
+              <div class="bar-group">
+                <div class="bar bar-a" style="height:95%"></div>
+                <div class="bar bar-b" style="height:70%"></div>
+              </div>
+              <div class="chart-label">Dez</div>
+            </div>
+          </div>
+
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--accent)"></div>
+              Receita
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--accent2)"></div>
+              Despesas
+            </div>
+            <div style="margin-left:auto;font-size:12px;color:var(--text-secondary);">
+              Total: <strong style="color:var(--text-primary);">€ 84.270</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donut Chart -->
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Canais de Venda</div>
+            <div class="section-sub">Distribuição por canal</div>
+          </div>
+        </div>
+
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg viewBox="0 0 160 160">
+              <circle class="donut-bg" cx="80" cy="80" r="62"/>
+              <!-- circumference ≈ 389.6 -->
+              <!-- Online: 42% → dasharray = 163.6 389.6 / offset = 0 -->
+              <circle class="donut-seg" cx="80" cy="80" r="62"
+                stroke="#6c63ff"
+                stroke-dasharray="163.6 389.6"
+                stroke-dashoffset="0"/>
+              <!-- App: 28% → 109.1 / offset = -163.6 -->
+              <circle class="donut-seg" cx="80" cy="80" r="62"
+                stroke="#ff6584"
+                stroke-dasharray="109.1 389.6"
+                stroke-dashoffset="-163.6"/>
+              <!-- Loja: 18% → 70.1 / offset = -272.7 -->
+              <circle class="donut-seg" cx="80" cy="80" r="62"
+                stroke="#43e97b"
+                stroke-dasharray="70.1 389.6"
+                stroke-dashoffset="-272.7"/>
+              <!-- Parceiros: 12% → 46.8 / offset = -342.8 -->
+              <circle class="donut-seg" cx="80" cy="80" r="62"
+                stroke="#f7971e"
+                stroke-dasharray="46.8 389.6"
+                stroke-dashoffset="-342.8"/>
+            </svg>
+            <div class="donut-center">
+              <span class="donut-center-val">100%</span>
+              <span class="donut-center-label">Total</span>
+            </div>
+          </div>
+
+          <div class="donut-legend">
+            <div class="donut-legend-item">
+              <div class="dl-dot" style="background:var(--accent)"></div>
+              <div class="dl-name">Online</div>
+              <div class="dl-bar"><div class="dl-bar-fill" style="width:42%;background:var(--accent)"></div></div>
+              <div class="dl-val" style="color:var(--accent)">42%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="dl-dot" style="background:var(--accent2)"></div>
+              <div class="dl-name">App Móvel</div>
+              <div class="dl-bar"><div class="dl-bar-fill" style="width:28%;background:var(--accent2)"></div></div>
+              <div class="dl-val" style="color:var(--accent2)">28%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="dl-dot" style="background:var(--accent3)"></div>
+              <div class="dl-name">Loja Física</div>
+              <div class="dl-bar"><div class="dl-bar-fill" style="width:18%;background:var(--accent3)"></div></div>
+              <div class="dl-val" style="color:var(--accent3)">18%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="dl-dot" style="background:var(--accent4)"></div>
+              <div class="dl-name">Parceiros</div>
+              <div class="dl-bar"><div class="dl-bar-fill" style="width:12%;background:var(--accent4)"></div></div>
+              <div class="dl-val" style="color:var(--accent4)">12%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STATS ROW -->
+    <div class="three-grid">
+
+      <div class="stat-mini">
+        <div class="stat-mini-icon" style="background:rgba(108,99,255,0.15)">🛒</div>
+        <div class="stat-mini-body">
+          <div class="stat-mini-val">2.841</div>
+          <div class="stat-mini-label">Encomendas este mês</div>
+          <div class="stat-mini-sub trend-up">▲ 14% vs anterior</div>
+        </div>
+      </div>
+
+      <div class="stat-mini">
+        <div class="stat-mini-icon" style="background:rgba(67,233,123,0.15)">✅</div>
+        <div class="stat-mini-body">
+          <div class="stat-mini-val">97,2%</div>
+          <div class="stat-mini-label">Taxa de entrega a tempo</div>
+          <div class="stat-mini-sub trend-up">▲ 1,8% vs anterior</div>
+        </div>
+      </div>
+
+      <div class="stat-mini">
+        <div class="stat-mini-icon" style="background:rgba(255,101,132,0.15)">↩️</div>
+        <div class="stat-mini-body">
+          <div class="stat-mini-val">1,4%</div>
+          <div class="stat-mini-label">Taxa de devoluções</div>
+          <div class="stat-mini-sub trend-down">▼ 0,2% vs anterior</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM GRID -->
+    <div class="bottom-grid">
+
+      <!-- Table -->
+      <div class="card">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Projetos Recentes</div>
+            <div class="section-sub">Últimas atualizações</div>
+          </div>
+          <a href="#" class="btn btn-outline" style="padding:6px 14px;font-size:12px;">Ver todos</a>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Projeto</th>
+              <th>Estado</th>
+              <th>Progresso</th>
+              <th>Prazo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="font-weight:600;">Redesign Web</div>
+                <div style="font-size:11px;color:var(--text-secondary);">3 membros</div>
+              </td>
+              <td><span class="status-badge s-active">Ativo</span></td>
+              <td>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:78%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">78%</div>
+              </td>
+              <td style="font-size:12px;color:var(--text-secondary);">15 Jul</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600;">App Mobile v2</div>
+                <div style="font-size:11px;color:var(--text-secondary);">5 membros</div>
+              </td>
+              <td><span class="status-badge s-pending">Pendente</span></td>
+              <td>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:45%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">45%</div>
+              </td>
+              <td style="font-size:12px;color:var(--text-secondary);">30 Ago</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600;">API Integração</div>
+                <div style="font-size:11px;color:var(--text-secondary);">2 membros</div>
+              </td>
+              <td><span class="status-badge s-active">Ativo</span></td>
+              <td>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:92%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">92%</div>
+              </td>
+              <td style="font-size:12px;color:var(--text-secondary);">5 Jul</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600;">CRM Migração</div>
+                <div style="font-size:11px;color:var(--text-secondary);">4 membros</div>
+              </td>
+              <td><span class="status-badge s-inactive">Pausado</span></td>
+              <td>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:30%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">30%</div>
+              </td>
+              <td style="font-size:12px;color:var(--text-secondary);">Out 2025</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="font-weight:600;">Dashboard BI</div>
+                <div style="font-size:11px;color:var(--text-secondary);">2 membros</div>
+              </td>
+              <td><span class="status-badge s-active">Ativo</span></td>
+              <td>
+                <div class="prog-bar">
+                  <div class="prog-fill" style="width:61%"></div>
+                </div>
+                <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">61%</div>
+              </td>
+              <td style="font-size:12px;color:var(--text-secondary);">20 Set</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Activity + Goals -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Activity Feed -->
+        <div class="card">
+          <div class="section-header" style="margin-bottom:4px;">
+            <div>
+              <div class="section-title">Atividade Recente</div>
+              <div class="section-sub">Últimas 24 horas</div>
+            </div>
+            <a href="#" style="font-size:12px;color:var(--accent);text-decoration:none;">Ver tudo</a>
+          </div>
+
+          <div class="activity-list">
+
+            <div class="activity-item">
+              <div class="activity-line"></div>
+              <div class="act-icon" style="background:rgba(108,99,255,0.15);">📤</div>
+              <div class="act-body">
+                <div class="act-title">Relatório enviado</div>
+                <div class="act-desc">Relatório Q2 enviado para a direção</div>
+                <div class="act-time">há 12 minutos</div>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-line"></div>
+              <div class="act-icon" style="background:rgba(67,233,123,0.15);">👤</div>
+              <div class="act-body">
+                <div class="act-title">Novo cliente registado</div>
+                <div class="act-desc">João Silva criou uma conta premium</div>
+                <div class="act-time">há 34 minutos</div>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-line"></div>
+              <div class="act-icon" style="background:rgba(247,151,30,0.15);">⚠️</div>
+              <div class="act-body">
+                <div class="act-title">Alerta de stock</div>
+                <div class="act-desc">Produto #1042 abaixo do mínimo</div>
+                <div class="act-time">há 1 hora</div>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="act-icon" style="background:rgba(255,101,132,0.15);">💰</div>
+              <div class="act-body">
+                <div class="act-title">Pagamento recebido</div>
+                <div class="act-desc">€ 4.200 — Fatura #INV-2089</div>
+                <div class="act-time">há 3 horas</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Goals -->
+        <div class="card">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Metas do Mês</div>
+              <div class="section-sub">Junho 2025</div>
+            </div>
+          </div>
+
+          <div class="progress-list">
+
+            <div class="prog-item">
+              <div class="prog-header">
+                <div class="prog-name">Receita</div>
+                <div class="prog-pct">84%</div>
+              </div>
+              <div class="prog-track">
+                <div class="prog-val" style="width:84%;background:linear-gradient(90deg,var(--accent),#a78bfa)"></div>
+              </div>
+              <div class="prog-meta">€ 84.270 / € 100.000</div>
+            </div>
+
+            <div class="prog-item">
+              <div class="prog-header">
+                <div class="prog-name">Novos Clientes</div>
+                <div class="prog-pct">67%</div>
+              </div>
+              <div class="prog-track">
+                <div class="prog-val" style="width:67%;background:linear-gradient(90deg,var(--accent2),#f9a8d4)"></div>
+              </div>
+              <div class="prog-meta">1.348 / 2.000 clientes</div>
+            </div>
+
+            <div class="prog-item">
+              <div class="prog-header">
+                <div class="prog-name">Satisfação NPS</div>
+                <div class="prog-pct">91%</div>
+              </div>
+              <div class="prog-track">
+                <div class="prog-val" style="width:91%;background:linear-gradient(90deg,var(--accent3),#86efac)"></div>
+              </div>
+              <div class="prog-meta">Score: 73 / meta: 80</div>
+            </div>
+
+            <div class="prog-item">
+              <div class="prog-header">
+                <div class="prog-name">Encomendas</div>
+                <div class="prog-pct">57%</div>
+              </div>
+              <div class="prog-track">
+                <div class="prog-val" style="width:57%;background:linear-gradient(90deg,var(--accent4),#fde68a)"></div>
+              </div>
+              <div class="prog-meta">2.841 / 5.000 encomendas</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="margin-top:32px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:12px;color:var(--text-secondary);">© 2025 NovaDash · Todos os direitos reservados</div>
+      <div style="display:flex;gap:20px;">
+        <a href="#" style="font-size:12px;color:var(--text-secondary);text-decoration:none;">Privacidade</a>
+        <a href="#" style="font-size:12px;color:var(--text-secondary);text-decoration:none;">Termos</a>
+        <a href="#" style="font-size:12px;color:var(--text-secondary);text-decoration:none;">Contacto</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+</body>
+</html>

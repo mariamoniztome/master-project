@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NovaTech — Soluções Digitais</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6c63ff;
+      --primary-dark: #574fd6;
+      --accent: #ff6584;
+      --dark: #1a1a2e;
+      --dark2: #16213e;
+      --mid: #0f3460;
+      --light: #f4f4f8;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --gray-light: #e5e7eb;
+      --gradient: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(26,26,46,0.95);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      border-bottom: 1px solid rgba(108,99,255,0.3);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-cta {
+      background: var(--gradient);
+      color: var(--white) !important;
+      padding: 0.5rem 1.3rem;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,101,132,0.15) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.4);
+      color: #a89fff;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(108,99,255,0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.25);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: rgba(108,99,255,0.1);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 90px 5%; }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(108,99,255,0.1);
+      color: var(--primary);
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray);
+      max-width: 560px;
+    }
+
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ── LOGOS BAND ── */
+    .logos-band {
+      background: var(--light);
+      padding: 40px 5%;
+      text-align: center;
+      border-top: 1px solid var(--gray-light);
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .logos-band p {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .logos-row {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-item {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #c4c4cc;
+      letter-spacing: -0.5px;
+    }
+
+    /* ── FEATURES ── */
+    .features { background: var(--white); }
+
+    .features-header {
+      max-width: 1100px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--light);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(108,99,255,0.1);
+      border-color: rgba(108,99,255,0.2);
+    }
+
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--dark);
+    }
+
+    .feature-card p {
+      font-size: 0.93rem;
+      color: var(--gray);
+      line-height: 1.65;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .how .section-title { color: var(--white); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 3rem auto 0;
+    }
+
+    .step {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+
+    .step-num {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: var(--gradient);
+      color: var(--white);
+      font-weight: 900;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+    }
+
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--light); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 3rem auto 0;
+    }
+
+    .plan {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.2rem;
+      border: 2px solid var(--gray-light);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .plan:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    }
+
+    .plan.featured {
+      border-color: var(--primary);
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.25rem 1rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .plan.featured .plan-name { color: #a89fff; }
+
+    .plan-price {
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      color: var(--dark);
+    }
+
+    .plan.featured .plan-price { color: var(--white); }
+
+    .plan-period {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .plan.featured .plan-period { color: rgba(255,255,255,0.55); }
+
+    .plan-divider {
+      height: 1px;
+      background: var(--gray-light);
+      margin: 1.2rem 0;
+    }
+
+    .plan.featured .plan-divider { background: rgba(255,255,255,0.1); }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .plan-features li {
+      font-size: 0.9rem;
+      color: var(--gray);
+      padding: 0.45rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .plan.featured .plan-features li { color: rgba(255,255,255,0.75); }
+
+    .plan-features li::before {
+      content: '✓';
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(108,99,255,0.15);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .plan.featured .plan-features li::before {
+      background: rgba(108,99,255,0.3);
+      color: #a89fff;
+    }
+
+    .plan-features li.disabled { opacity: 0.4; }
+    .plan-features li.disabled::before { content: '✕'; }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      padding: 0.85rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .plan-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .plan-btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .plan-btn-filled {
+      background: var(--gradient);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(108,99,255,0.35);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--white); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 3rem auto 0;
+    }
+
+    .testimonial {
+      background: var(--light);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--gray-light);
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial blockquote {
+      font-size: 0.95rem;
+      color: var(--dark);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .av1 { background: linear-gradient(135deg, #6c63ff, #ff6584); }
+    .av2 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .av3 { background: linear-gradient(135deg, #10b981, #3b82f6); }
+    .av4 { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+
+    .author-info strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .author-info span {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* ── FAQ ── */
+    .faq { background: var(--light); }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 3rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--gray-light);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      padding: 1.2rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: var(--dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+    }
+
+    .faq-q::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--primary);
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    .faq-a {
+      padding: 0 1.5rem 1.2rem;
+      font-size: 0.93rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: var(--dark);
+      padding: 90px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(108,99,255,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-band h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-band h2 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-band p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-form input[type="email"] {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.9rem 1.4rem;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      font-size: 0.95rem;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .cta-form input[type="email"]::placeholder { color: rgba(255,255,255,0.4); }
+    .cta-form input[type="email"]:focus { border-color: var(--primary); }
+
+    .cta-form button {
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      border: none;
+      background: var(--gradient);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+      transition: opacity 0.2s;
+    }
+
+    .cta-form button:hover { opacity: 0.85; }
+
+    .cta-note {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d0d1a;
+      padding: 60px 5% 30px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .nav-logo {
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li {
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.87rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p { font-size: 0.83rem; }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .social-link {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .hero-stats { gap: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      section { padding: 70px 5%; }
+
+      .footer-top { grid-template-columns: 1fr; }
+
+      .hero-stats { gap: 1.2rem; }
+      .stat-num { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">NovaTech</a>
+    <ul class="nav-links">
+      <li><a href="#features">Funcionalidades</a></li>
+      <li><a href="#how">Como funciona</a></li>
+      <li><a href="#pricing">Preços</a></li>
+      <li><a href="#testimonials">Testemunhos</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#cta" class="nav-cta">Começar Grátis</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div>
+      <div class="hero-badge">✦ Nova plataforma 2025</div>
+      <h1>Transforma o teu negócio com <span>soluções digitais</span> de próxima geração</h1>
+      <p>Automatiza processos, aumenta a produtividade e escala o teu negócio com ferramentas poderosas desenhadas para equipas modernas.</p>
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">Começa Gratuitamente →</a>
+        <a href="#how" class="btn-secondary">Ver como funciona</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">12K+</div>
+          <div class="stat-label">Utilizadores ativos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Satisfação</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3x</div>
+          <div class="stat-label">Mais produtividade</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Suporte dedicado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS -->
+  <div class="logos-band">
+    <p>Empresas que confiam na NovaTech</p>
+    <div class="logos-row">
+      <div class="logo-item">Accenture</div>
+      <div class="logo-item">Deloitte</div>
+      <div class="logo-item">Farfetch</div>
+      <div class="logo-item">Outsystems</div>
+      <div class="logo-item">Jumia</div>
+      <div class="logo-item">Revolut</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <div class="section-tag">Funcionalidades</div>
+      <h2 class="section-title">Tudo o que precisas<br>numa única plataforma</h2>
+      <p class="section-sub">Ferramentas intuitivas e poderosas para que a tua equipa trabalhe melhor, mais rápido e com menos fricção.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Automação inteligente</h3>
+        <p>Elimina tarefas repetitivas com fluxos de trabalho automatizados e regras personalizáveis que se adaptam ao teu negócio.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Análise em tempo real</h3>
+        <p>Dashboards visuais com métricas atualizadas ao segundo. Toma decisões baseadas em dados, não em suposições.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Integrações nativas</h3>
+        <p>Conecta-se com mais de 200 ferramentas populares como Slack, Salesforce, HubSpot, Stripe e muito mais.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Segurança de nível enterprise</h3>
+        <p>Encriptação AES-256, autenticação multifator, conformidade com RGPD e backups automáticos diários.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Colaboração em equipa</h3>
+        <p>Partilha projetos, atribui tarefas e comenta em tempo real. Toda a equipa alinhada, sempre.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>Escalável sem limites</h3>
+        <p>Infraestrutura cloud que cresce com o teu negócio. De startup a enterprise, sem mudanças de plataforma.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div style="text-align:center; max-width:600px; margin:0 auto;">
+      <div class="section-tag">Como funciona</div>
+      <h2 class="section-title" style="color:white;">Começa em 3 passos simples</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.55); margin:0 auto;">Sem instalações complexas. Sem curvas de aprendizagem longas. Operacional em minutos.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Cria a tua conta</h3>
+        <p>Regista-te gratuitamente em menos de 30 segundos. Sem cartão de crédito necessário.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Configura o teu espaço</h3>
+        <p>Personaliza o ambiente de trabalho e conecta as ferramentas que já utilizas diariamente.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Convida a tua equipa</h3>
+        <p>Adiciona colaboradores, define permissões e começa a trabalhar de forma mais inteligente.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Escala o teu negócio</h3>
+        <p>Monitoriza resultados, itera rapidamente e cresce com confiança usando dados reais.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="text-center" style="margin-bottom:0;">
+      <div class="section-tag">Preços</div>
+      <h2 class="section-title">Planos transparentes,<br>sem surpresas</h2>
+      <p class="section-sub">Começa gratuitamente e faz upgrade quando precisares. Cancela a qualquer momento.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">€0</div>
+        <div class="plan-period">Para sempre grátis</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Até 3 utilizadores</li>
+          <li>5 projetos ativos</li>
+          <li>1 GB de armazenamento</li>
+          <li>Integrações básicas</li>
+          <li class="disabled">Automações avançadas</li>
+          <li class="disabled">Suporte prioritário</li>
+        </ul>
+        <a href="#cta" class="plan-btn plan-btn-outline">Começar grátis</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">⭐ Mais Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">€29</div>
+        <div class="plan-period">por utilizador / mês</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Utilizadores ilimitados</li>
+          <li>Projetos ilimitados</li>
+          <li>100 GB de armazenamento</li>
+          <li>200+ integrações</li>
+          <li>Automações avançadas</li>
+          <li>Suporte prioritário 24/7</li>
+        </ul>
+        <a href="#cta" class="plan-btn plan-btn-filled">Experimentar 14 dias</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-period">Preço personalizado</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Tudo do plano Pro</li>
+          <li>Armazenamento ilimitado</li>
+          <li>SSO & SAML</li>
+          <li>Gestor de conta dedicado</li>
+          <li>SLA garantido 99.99%</li>
+          <li>Onboarding personalizado</li>
+        </ul>
+        <a href="#cta" class="plan-btn plan-btn-outline">Falar com vendas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="text-center">
+      <div class="section-tag">Testemunhos</div>
+      <h2 class="section-title">O que dizem os nossos clientes</h2>
+      <p class="section-sub">Mais de 12.000 equipas já transformaram a forma como trabalham com a NovaTech.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <blockquote>"A NovaTech reduziu o tempo que a nossa equipa gastava em tarefas manuais em mais de 60%. O ROI foi imediato e visível."</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar av1">AM</div>
+          <div class="author-info">
+            <strong>Ana Marques</strong>
+            <span>COO, Startup Lisboa</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <blockquote>"A plataforma mais intuitiva que já usei. A minha equipa adotou-a sem qualquer formação extra. Simplesmente funciona."</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar av2">RC</div>
+          <div class="author-info">
+            <strong>Rui Costa</strong>
+            <span>CTO, TechPorto Labs</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <blockquote>"O suporte ao cliente é excecional. Responderam ao meu problema em menos de 10 minutos, a qualquer hora do dia."</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar av3">IS</div>
+          <div class="author-info">
+            <strong>Inês Santos</strong>
+            <span>Gestora de Produto, Fartech</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Escalamos de 5 para 80 pessoas sem mudar de plataforma. A NovaTech cresceu connosco. Não consigo imaginar trabalhar sem ela."</blockquote>
+        <div class="testimonial-author">
+          <div class="avatar av4">JF</div>
+          <div class="author-info">
+            <strong>João Ferreira</strong>
+            <span>CEO, GrowthBraga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="text-center">
+      <div class="section-tag">FAQ</div>
+      <h2 class="section-title">Perguntas frequentes</h2>
+      <p class="section-sub">Encontra respostas para as dúvidas mais comuns. Não encontras o que procuras? Fala connosco.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Preciso de cartão de crédito para o plano gratuito?</div>
+        <div class="faq-a">Não. O plano Starter é completamente gratuito e não requer qualquer informação de pagamento. Podes usar a plataforma sem limitação de tempo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Posso cancelar a subscrição a qualquer momento?</div>
+        <div class="faq-a">Sim, absolutamente. Podes cancelar ou fazer downgrade do teu plano a qualquer momento, sem penalizações ou taxas de saída. Os teus dados ficam disponíveis por 30 dias após o cancelamento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">A NovaTech está em conformidade com o RGPD?</div>
+        <div class="faq-a">Sim. Levamos a privacidade a sério. Os nossos servidores estão localizados na União Europeia e cumprimos todas as obrigações do RGPD. Podes solicitar a exportação ou eliminação dos teus dados a qualquer momento.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Existe um período de teste para o plano Pro?</div>
+        <div class="faq-a">Sim! O plano Pro inclui um período de teste de 14 dias completamente gratuito, com acesso a todas as funcionalidades. Sem compromisso.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona a migração de outra plataforma?</div>
+        <div class="faq-a">Temos ferramentas de importação dedicadas para as plataformas mais populares. A nossa equipa de onboarding ajuda-te a migrar todos os dados sem perdas e sem tempo de inatividade.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Oferecem desconto para startups ou ONGs?</div>
+        <div class="faq-a">Sim! Temos programas especiais com descontos de até 50% para startups em fase inicial, ONGs e instituições de ensino. Entra em contacto connosco para saber mais.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band" id="cta">
+    <h2>Pronto para <span>transformar</span> o teu negócio?</h2>
+    <p>Junta-te a mais de 12.000 equipas. Começa hoje, gratuitamente.</p>
+    <form class="cta-form" action="#" method="post">
+      <input type="email" placeholder="O teu endereço de e-mail" required />
+      <button type="submit">Começar Grátis →</button>
+    </form>
+    <p class="cta-note">Sem cartão de crédito · Cancela quando quiseres · Configurado em 2 minutos</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">NovaTech</a>
+        <p>Soluções digitais de próxima geração para equipas que querem trabalhar melhor e crescer mais rápido.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="#features">Funcionalidades</a></li>
+          <li><a href="#pricing">Preços</a></li>
+          <li><a href="#">Integrações</a></li>
+          <li><a href="#">Changelog</a></li>
+          <li><a href="#">Roteiro</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Carreiras</a></li>
+          <li><a href="#">Parceiros</a></li>
+          <li><a href="#">Imprensa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Centro de ajuda</a></li>
+          <li><a href="#">Documentação</a></li>
+          <li><a href="#">Status</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Comunidade</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NovaTech, Lda. Todos os direitos reservados. · <a href="#" style="color:rgba(255,255,255,0.4); text-decoration:none;">Privacidade</a> · <a href="#" style="color:rgba(255,255,255,0.4); text-decoration:none;">Termos</a></p>
+      <div class="footer-socials">
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">Tw</a>
+        <a href="#" class="social-link">Gh</a>
+        <a href="#" class="social-link">Yt</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

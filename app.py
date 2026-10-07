@@ -21,7 +21,15 @@ from src.state import (
     IA_DIR,
     HUMANAS_DIR,
 )
-from src.ia_generation import gerar_interfaces_sync, TIPOS_PAGINA
+from src.ia_generation import (
+    TIPOS_PAGINA,
+    carregar_lote,
+    contar_por_tipo,
+    custo_estimado_por_interface,
+    enviar_lote,
+    estado_lote,
+    processar_lote_sync,
+)
 from src.behance_scraper import scraping_behance_sync
 from src.visual_analysis import analisar_corpus
 from src.dashboard import mostrar_dashboard
@@ -49,18 +57,20 @@ def init_estado() -> dict:
 def secao_geracao_ia(estado: dict) -> None:
     """Secção 1: Geração de Interfaces IA.
 
-    Permite introduzir a API key da Anthropic e gerar 120 interfaces
-    web usando o Claude, com barra de progresso.
+    Envia os pedidos de geração em lote (Message Batches API, metade do
+    preço) e, quando o lote termina, descarrega os resultados e captura
+    os screenshots.
 
     Args:
         estado: Estado persistente da aplicação.
     """
     st.header("1. Geração de Interfaces IA")
     st.markdown(
-        "Gera 120 interfaces web em HTML/CSS usando o Claude (modelo "
+        "Gera até 120 interfaces web em HTML/CSS usando o Claude (modelo "
         "claude-sonnet-4-6), 30 de cada tipo: landing page, dashboard, "
         "formulário de contacto e página de produto. As prompts não "
-        "contêm especificações visuais."
+        "contêm especificações visuais. Os pedidos são enviados em lote "
+        "(metade do preço), em ordem rotativa entre os tipos."
     )
 
     # Campo para API key
@@ -71,36 +81,86 @@ def secao_geracao_ia(estado: dict) -> None:
         help="Introduz a tua chave de API da Anthropic.",
     )
 
-    # Mostra progresso atual
-    geradas = obter_progresso("ia")
+    # Progresso por tipo
+    contagem = contar_por_tipo()
+    colunas = st.columns(len(TIPOS_PAGINA))
+    for coluna, (tipo, objetivo) in zip(colunas, TIPOS_PAGINA.items()):
+        coluna.metric(tipo.replace("_", " ").capitalize(), f"{contagem[tipo]} / {objetivo}")
     total_objetivo = sum(TIPOS_PAGINA.values())
-    st.info(f"Interfaces IA geradas: {geradas} / {total_objetivo}")
+    restantes = total_objetivo - sum(contagem.values())
 
-    if estado.get("ia", {}).get("concluido", False):
+    if restantes == 0:
         st.success("Geração de interfaces IA concluída!")
+        return
 
-    # Botão para gerar
-    if st.button("Gerar Interfaces IA", type="primary", disabled=not api_key):
-        if not api_key:
-            st.error("Introduz a API key da Anthropic.")
-            return
+    lote = carregar_lote()
 
-        barra = st.progress(0, text="A iniciar geração...")
-        texto_status = st.empty()
-
-        def callback_progresso(geradas, total, tipo, indice):
-            percentagem = int(geradas / total * 100)
-            barra.progress(percentagem, text=f"A gerar {tipo} ({indice}/{TIPOS_PAGINA[tipo]}) — {geradas}/{total} total")
-            texto_status.text(f"Última: {tipo}_{indice:03d}.png")
-
-        with st.spinner("A gerar interfaces com Claude..."):
+    # Há um lote enviado: verificar e processar
+    if lote:
+        st.info(
+            f"Lote enviado em {lote['enviado']} com {len(lote['interfaces'])} interfaces. "
+            "Normalmente fica pronto em menos de uma hora (máximo 24 horas). "
+            "Pode fechar a app e voltar mais tarde."
+        )
+        if st.button("Verificar lote", type="primary", disabled=not api_key):
             try:
-                resultado = gerar_interfaces_sync(api_key, callback_progresso)
-                barra.progress(100, text="Geração concluída!")
-                st.success(f"Interfaces geradas: {sum(resultado.values())}")
-                st.session_state.estado = carregar_estado()
+                info = estado_lote(api_key, lote["id"])
             except Exception as e:
-                st.error(f"Erro durante a geração: {e}")
+                st.error(f"Erro ao consultar o lote: {e}")
+                return
+
+            contas = info.request_counts
+            if info.processing_status != "ended":
+                st.warning(
+                    f"Ainda em processamento: {contas.succeeded} concluídas, "
+                    f"{contas.processing} em curso. Volte a verificar daqui a alguns minutos."
+                )
+                return
+
+            barra = st.progress(0, text="A descarregar resultados e a capturar screenshots...")
+
+            def callback_progresso(processadas, total, nome_base):
+                barra.progress(int(processadas / total * 100), text=f"{processadas}/{total} — {nome_base}.png")
+
+            try:
+                resultado = processar_lote_sync(api_key, lote["id"], callback_progresso)
+            except Exception as e:
+                st.error(f"Erro ao processar o lote: {e}")
+                return
+            st.success(f"Interfaces geradas: {resultado['geradas']}.")
+            if resultado["falhadas"]:
+                st.warning(
+                    f"{resultado['falhadas']} pedidos falharam (por exemplo, por falta de saldo). "
+                    "Essas interfaces continuam em falta e entram no próximo lote."
+                )
+            st.session_state.estado = carregar_estado()
+        if not api_key:
+            st.caption("Introduz a API key para verificar o lote.")
+        return
+
+    # Sem lote pendente: escolher quantas interfaces pedir
+    custo = custo_estimado_por_interface()
+    quantidade = st.number_input(
+        "Interfaces a pedir neste lote",
+        min_value=1,
+        max_value=restantes,
+        value=min(restantes, 40),
+        step=1,
+        help="As interfaces são pedidas em ordem rotativa entre os 4 tipos.",
+    )
+    st.caption(
+        f"Custo estimado: {quantidade * custo:.2f} USD "
+        f"(≈ {custo:.3f} USD por interface, com base nos tokens já registados)."
+    )
+
+    if st.button("Enviar lote", type="primary", disabled=not api_key):
+        try:
+            registo = enviar_lote(api_key, int(quantidade))
+        except Exception as e:
+            st.error(f"Erro ao enviar o lote: {e}")
+            return
+        st.success(f"Lote enviado com {len(registo['interfaces'])} interfaces.")
+        st.rerun()
 
 
 def secao_scraping_behance(estado: dict) -> None:
@@ -177,8 +237,17 @@ def secao_analise_visual(estado: dict) -> None:
     with col2:
         st.metric("Interfaces Humanas", total_humana)
 
-    if total_ia == 0 and total_humana == 0:
-        st.warning("Ambos os corpus estão vazios. Gera interfaces IA e faz scraping do Behance primeiro.")
+    modo_teste = st.session_state.get("modo_teste", False)
+    if modo_teste and (total_ia > 0 or total_humana > 0):
+        st.info("Modo teste: a análise corre só com as imagens disponíveis.")
+    # A análise compara os dois grupos, por isso ambos têm de ter imagens
+    elif total_ia == 0 or total_humana == 0:
+        em_falta = []
+        if total_ia == 0:
+            em_falta.append("gera as interfaces IA (secção 1)")
+        if total_humana == 0:
+            em_falta.append("faz o scraping do Behance (secção 2)")
+        st.warning(f"A análise precisa dos dois grupos. Antes de continuar, {' e '.join(em_falta)}.")
         return
 
     if estado.get("analise", {}).get("concluido", False):
@@ -218,7 +287,7 @@ def secao_dashboard(estado: dict) -> None:
         st.warning("O dashboard só fica disponível depois de a análise estar completa.")
         return
 
-    mostrar_dashboard()
+    mostrar_dashboard(modo_teste=st.session_state.get("modo_teste", False))
 
 
 def main() -> None:
@@ -254,6 +323,13 @@ def main() -> None:
     st.sidebar.divider()
 
     selecao = st.sidebar.radio("Navegação", opcoes, index=0)
+
+    st.sidebar.toggle(
+        "Modo teste",
+        key="modo_teste",
+        help="Permite analisar e ver resultados só com as imagens disponíveis "
+        "(por exemplo, só as humanas), sem as interfaces da IA.",
+    )
 
     st.sidebar.divider()
     st.sidebar.markdown(

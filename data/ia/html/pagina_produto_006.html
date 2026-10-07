@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produto - Headphones Pro X1</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    color: #1a1a2e;
+  }
+
+  /* NAVBAR */
+  nav {
+    background-color: #1a1a2e;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+
+  .nav-logo {
+    color: #e94560;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: #e94560;
+  }
+
+  .nav-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-icon {
+    color: #ccc;
+    font-size: 1.3rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .cart-badge {
+    background-color: #e94560;
+    color: white;
+    font-size: 0.65rem;
+    border-radius: 50%;
+    padding: 2px 6px;
+    margin-left: -8px;
+    vertical-align: top;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    padding: 14px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .breadcrumb a {
+    color: #888;
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: #e94560;
+  }
+
+  .breadcrumb span {
+    margin: 0 8px;
+  }
+
+  .breadcrumb .current {
+    color: #1a1a2e;
+    font-weight: 600;
+  }
+
+  /* MAIN PRODUCT SECTION */
+  .product-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* PRODUCT GALLERY */
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .main-image {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(26,26,46,0.3);
+  }
+
+  .badge-new {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #e94560;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .badge-sale {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f5a623;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .product-svg {
+    width: 320px;
+    height: 320px;
+  }
+
+  .thumbnails {
+    display: flex;
+    gap: 12px;
+  }
+
+  .thumb {
+    flex: 1;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 12px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .thumb:hover {
+    transform: translateY(-3px);
+  }
+
+  .thumb.active {
+    border-color: #e94560;
+  }
+
+  .thumb svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* PRODUCT INFO */
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .brand-tag {
+    display: inline-block;
+    color: #e94560;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .product-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.2;
+  }
+
+  /* RATING */
+  .rating-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .star {
+    color: #f5a623;
+    font-size: 1.1rem;
+  }
+
+  .star-empty {
+    color: #ddd;
+    font-size: 1.1rem;
+  }
+
+  .rating-count {
+    color: #888;
+    font-size: 0.9rem;
+  }
+
+  .verified {
+    color: #27ae60;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #eafaf1;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* PRICE */
+  .price-section {
+    background: linear-gradient(135deg, #f8f9ff, #f0f4ff);
+    border-radius: 16px;
+    padding: 20px 24px;
+    border: 1px solid #e0e8ff;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .price-current {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #1a1a2e;
+  }
+
+  .price-old {
+    font-size: 1.3rem;
+    color: #bbb;
+    text-decoration: line-through;
+  }
+
+  .discount-tag {
+    background-color: #e94560;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+
+  .tax-note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 6px;
+  }
+
+  .installment {
+    font-size: 0.9rem;
+    color: #27ae60;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background-color: #eee;
+  }
+
+  /* COLOR SELECTOR */
+  .option-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .color-options {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .color-input {
+    display: none;
+  }
+
+  .color-label {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    outline: 2px solid transparent;
+    transition: outline-color 0.3s, transform 0.2s;
+    display: block;
+  }
+
+  .color-label:hover {
+    transform: scale(1.15);
+  }
+
+  .color-input:checked + .color-label {
+    outline-color: #e94560;
+    outline-offset: 3px;
+  }
+
+  .color-midnight { background-color: #1a1a2e; }
+  .color-white { background-color: #f0f0f0; border: 2px solid #ddd; }
+  .color-red { background-color: #e94560; }
+  .color-blue { background-color: #0f3460; }
+
+  .color-name {
+    font-size: 0.9rem;
+    color: #555;
+    margin-left: 8px;
+  }
+
+  /* SIZE / VARIANT SELECTOR */
+  .variant-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .variant-input {
+    display: none;
+  }
+
+  .variant-label {
+    padding: 8px 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    transition: all 0.3s;
+    background-color: #fff;
+  }
+
+  .variant-label:hover {
+    border-color: #e94560;
+    color: #e94560;
+  }
+
+  .variant-input:checked + .variant-label {
+    border-color: #e94560;
+    background-color: #e94560;
+    color: white;
+  }
+
+  /* QUANTITY */
+  .quantity-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .qty-control {
+    display: flex;
+    align-items: center;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+  }
+
+  .qty-btn {
+    background: none;
+    border: none;
+    padding: 12px 18px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #555;
+    transition: background-color 0.2s;
+    font-weight: 700;
+  }
+
+  .qty-btn:hover {
+    background-color: #f0f0f0;
+  }
+
+  .qty-display {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-left: 2px solid #e0e0e0;
+    border-right: 2px solid #e0e0e0;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .stock-info {
+    font-size: 0.85rem;
+    color: #27ae60;
+    font-weight: 600;
+  }
+
+  .stock-icon {
+    margin-right: 4px;
+  }
+
+  /* BUTTONS */
+  .btn-row {
+    display: flex;
+    gap: 14px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: linear-gradient(135deg, #e94560, #c0392b);
+    color: white;
+    border: none;
+    padding: 18px 30px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 25px rgba(233,69,96,0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(233,69,96,0.5);
+  }
+
+  .btn-secondary {
+    background-color: #fff;
+    color: #1a1a2e;
+    border: 2px solid #1a1a2e;
+    padding: 18px 30px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    background-color: #1a1a2e;
+    color: #fff;
+  }
+
+  .btn-wishlist {
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    padding: 18px 20px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+    color: #888;
+  }
+
+  .btn-wishlist:hover {
+    border-color: #e94560;
+    color: #e94560;
+    background-color: #fff5f7;
+  }
+
+  /* DELIVERY */
+  .delivery-section {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .delivery-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .delivery-icon {
+    font-size: 1.4rem;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .delivery-text strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 2px;
+  }
+
+  .delivery-text span {
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  /* SHARE */
+  .share-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .share-label {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .share-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .share-btn:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+  }
+
+  .share-fb { background-color: #1877f2; }
+  .share-tw { background-color: #1da1f2; }
+  .share-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .share-wa { background-color: #25d366; }
+
+  /* TABS SECTION */
+  .tabs-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+  }
+
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .tab-input {
+    display: none;
+  }
+
+  .tab-label {
+    padding: 16px 30px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #888;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+
+  .tab-label:hover {
+    color: #e94560;
+  }
+
+  .tab-input:checked + .tab-label {
+    color: #e94560;
+    border-bottom-color: #e94560;
+  }
+
+  .tab-content {
+    display: none;
+    padding: 40px 0;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #tab1:checked ~ .tab-contents #content1,
+  #tab2:checked ~ .tab-contents #content2,
+  #tab3:checked ~ .tab-contents #content3,
+  #tab4:checked ~ .tab-contents #content4 {
+    display: block;
+  }
+
+  /* DESCRIPTION CONTENT */
+  .desc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .desc-text h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #1a1a2e;
+  }
+
+  .desc-text p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  .feature-list li::before {
+    content: "✓";
+    color: #27ae60;
+    font-weight: 800;
+    font-size: 1rem;
+    background-color: #eafaf1;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .desc-visual {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    min-height: 300px;
+  }
+
+  /* SPECS TABLE */
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .specs-table tr:nth-child(even) {
+    background-color: #f8f9ff;
+  }
+
+  .specs-table td {
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .specs-table td:first-child {
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+    width: 200px;
+  }
+
+  .specs-table td:last-child {
+    color: #1a1a2e;
+  }
+
+  .specs-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* REVIEWS */
+  .reviews-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: center;
+  }
+
+  .rating-summary {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .big-rating {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    line-height: 1;
+  }
+
+  .big-stars {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 10px 0;
+  }
+
+  .big-stars span {
+    color: #f5a623;
+    font-size: 1.3rem;
+  }
+
+  .rating-meta {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .rating-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rating-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+  }
+
+  .rating-bar-label {
+    color: #888;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .rating-bar-track {
+    flex: 1;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .rating-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f5a623, #e94560);
+    border-radius: 4px;
+  }
+
+  .rating-bar-count {
+    color: #888;
+    min-width: 30px;
+  }
+
+  .reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .review-card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+  }
+
+  .avatar-blue { background: linear-gradient(135deg, #0f3460, #1a1a2e); }
+  .avatar-red { background: linear-gradient(135deg, #e94560, #c0392b); }
+  .avatar-green { background: linear-gradient(135deg, #27ae60, #1e8449); }
+
+  .reviewer-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+  }
+
+  .reviewer-date {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 2px;
+  }
+
+  .review-stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  .review-stars span {
+    color: #f5a623;
+    font-size: 0.9rem;
+  }
+
+  .review-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+
+  .review-text {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .review-helpful {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+
+  .helpful-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 4px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #888;
+    transition: all 0.2s;
+  }
+
+  .helpful-btn:hover {
+    border-color: #e94560;
+    color: #e94560;
+  }
+
+  .verified-purchase {
+    color: #27ae60;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background-color: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .faq-input {
+    display: none;
+  }
+
+  .faq-question {
+    padding: 20px 24px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+    user-select: none;
+  }
+
+  .faq-question::after {
+    content: "+";
+    font-size: 1.4rem;
+    color: #e94560;
+    font-weight: 400;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .faq-question:hover {
+    background-color: #fdf5f7;
+  }
+
+  .faq-input:checked ~ .faq-question {
+    background-color: #fdf5f7;
+    color: #e94560;
+  }
+
+  .faq-input:checked ~ .faq-question::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+
+  .faq-input:checked ~ .faq-answer {
+    max-height: 500px;
+  }
+
+  .faq-answer-inner {
+    padding: 0 24px 20px;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    border-top: 1px solid #f5e6ea;
+    padding-top: 16px;
+    margin: 0 24px;
+    margin-bottom: 20px;
+  }
+
+  /* RELATED PRODUCTS */
+  .related-section {
+    max-width: 1200px;
+    margin: 20px auto 60px;
+    padding: 0 40px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .section-link {
+    color: #e94560;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+
+  .section-link:hover {
+    opacity: 0.8;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    background-color: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+  }
+
+  .card-image {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    position: relative;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: #e94560;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .card-wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .card-body {
+    padding: 18px;
+  }
+
+  .card-brand {
+    font-size: 0.75rem;
+    color: #e94560;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .card-stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+
+  .card-stars span {
+    color: #f5a623;
+    font-size: 0.75rem;
+  }
+
+  .card-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .card-price-old {
+    font-size: 0.85rem;
+    color: #bbb;
+    text-decoration: line-through;
+  }
+
+  .card-btn {
+    background: linear-gradient(135deg, #e94560, #c0392b);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .card-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* FOOTER */
+  footer {
+    background-color: #1a1a2e;
+    color: #ccc;
+    padding: 60px 40px 30px;
+  }
+
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    color: #e94560;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+
+  .footer-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: #888;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 10px;
+  }
+
+  .social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .social-btn:hover {
+    background-color: #e94560;
+    color: white;
+  }
+
+  .footer-col h4 {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover {
+    color: #e94560;
+  }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .payment-icons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .payment-icon {
+    background-color: rgba(255,255,255,0.1);
+    color: #ccc;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  /* TOAST NOTIFICATION */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #1a1a2e;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .toast-check {
+    color: #27ae60;
+    font-size: 1.2rem;
+  }
+
+  /* Hover states for interactive elements */
+  a {
+    transition: color 0.3s;
+  }
+
+  /* Progress bar on page */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    width: 65%;
+    z-index: 9999;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .product-section {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .reviews-header {
+      grid-template-columns: 1fr;
+    }
+
+    .desc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      padding: 16px 20px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .product-section {
+      padding: 0 20px;
+    }
+
+    .tabs-section {
+      padding: 0 20px;
+    }
+
+    .related-section {
+      padding: 0 20px;
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    footer {
+      padding: 40px 20px 20px;
+    }
+
+    .product-title {
+      font-size: 1.8rem;
+    }
+
+    .tab-label {
+      padding: 14px 16px;
+      font-size: 0.85rem;
+    }
+
+    .btn-row {
+      flex-wrap: wrap;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-logo" href="#">AudioMax</a>
+  <ul class="nav-links">
+    <li><a href="#">Início</a></li>
+    <li><a href="#">Headphones</a></li>
+    <li><a href="#">Auscultadores</a></li>
+    <li><a href="#">Acessórios</a></li>
+    <li><a href="#">Promoções</a></li>
+    <li><a href="#">Sobre</a></li>
+  </ul>
+  <div class="nav-icons">
+    <a href="#" class="nav-icon">🔍</a>
+    <a href="#" class="nav-icon">👤</a>
+    <a href="#" class="nav-icon">🛒<span class="cart-badge">3</span></a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Início</a>
+  <span>›</span>
+  <a href="#">Headphones</a>
+  <span>›</span>
+  <a href="#">Sem fios</a>
+  <span>›</span>
+  <span class="current">Headphones Pro X1</span>
+</div>
+
+<!-- MAIN PRODUCT SECTION -->
+<div class="product-section">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="main-image">
+      <span class="badge-new">Novo</span>
+      <span class="badge-sale">−35%</span>
+      <svg class="product-svg" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Headphone body -->
+        <g>
+          <!-- Arc top -->
+          <path d="M80 160 Q80 60 160 60 Q240 60 240 160" stroke="#e94560" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <!-- Left ear cup outer -->
+          <ellipse cx="72" cy="172" rx="34" ry="44" fill="#e94560"/>
+          <!-- Left ear cup inner -->
+          <ellipse cx="72" cy="172" rx="22" ry="30" fill="#c0392b"/>
+          <!-- Left ear cup shine -->
+          <ellipse cx="64" cy="162" rx="7" ry="10" fill="rgba(255,255,255,0.2)"/>
+          <!-- Right ear cup outer -->
+          <ellipse cx="248" cy="172" rx="34" ry="44" fill="#e94560"/>
+          <!-- Right ear cup inner -->
+          <ellipse cx="248" cy="172" rx="22" ry="30" fill="#c0392b"/>
+          <!-- Right ear cup shine -->
+          <ellipse cx="240" cy="162" rx="7" ry="10" fill="rgba(255,255,255,0.2)"/>
+          <!-- Cable left -->
+          <line x1="72" y1="216" x2="72" y2="240" stroke="#333" stroke-width="4"/>
+          <!-- Cable right -->
+          <line x1="248" y1="216" x2="248" y2="240" stroke="#333" stroke-width="4"/>
+          <!-- Brand text -->
+          <text x="160" y="168" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="14" font-family="Arial" font-weight="bold">PRO X1</text>
+          <!-- Audio waves -->
+          <g opacity="0.6">
+            <path d="M290 150 Q295 160 290 170" stroke="#f5a623" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M300 142 Q308 162 300 182" stroke="#f5a623" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M30 150 Q25 160 30 170" stroke="#f5a623" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M20 142 Q12 162 20 182" stroke="#f5a623" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- Control button on right cup -->
+          <circle cx="260" cy="165" r="5" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="260" cy="178" r="5" fill="rgba(255,255,255,0.5)"/>
+          <!-- LED indicator -->
+          <circle cx="84" cy="165" r="4" fill="#00ff88"/>
+          <!-- Padding lines on arc -->
+          <path d="M90 100 Q160 80 230 100" stroke="rgba(255,255,255,0.15)" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="thumbnails">
+      <div class="thumb active">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 40 Q20 15 40 15 Q60 15 60 40" stroke="#e94560" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <ellipse cx="18" cy="44" rx="9" ry="12" fill="#e94560"/>
+          <ellipse cx="62" cy="44" rx="9" ry="12" fill="#e94560"/>
+        </svg>
+      </div>
+      <div class="thumb">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 40 Q20 15 40 15 Q60 15 60 40" stroke="#f0f0f0" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <ellipse cx="18" cy="44" rx="9" ry="12" fill="#f0f0f0"/>
+          <ellipse cx="62" cy="44" rx="9" ry="12" fill="#f0f0f0"/>
+        </svg>
+      </div>
+      <div class="thumb">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 40 Q20 15 40 15 Q60 15 60 40" stroke="#0f3460" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <ellipse cx="18" cy="44" rx="9" ry="12" fill="#0f3460"/>
+          <ellipse cx="62" cy="44" rx="9" ry="12" fill="#0f3460"/>
+        </svg>
+      </div>
+      <div class="thumb">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="20" width="60" height="40" rx="6" fill="#333" opacity="0.5"/>
+          <rect x="20" y="10" width="40" height="8" rx="4" fill="#555"/>
+          <circle cx="25" cy="40" r="8" fill="#e94560" opacity="0.6"/>
+          <circle cx="55" cy="40" r="8" fill="#e94560" opacity="0.6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="product-info">
+    <div>
+      <span class="brand-tag">AudioMax Premium</span>
+    </div>
+
+    <h1 class="product-title">Headphones Pro X1<br>Wireless ANC</h1>
+
+    <div class="rating-row">
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <span class="rating-count">4.9 (2.847 avaliações)</span>
+      <span class="verified">✓ Compra verificada</span>
+    </div>
+
+    <!-- PRICE -->
+    <div class="price-section">
+      <div class="price-row">
+        <span class="price-current">€169,99</span>
+        <span class="price-old">€259,99</span>
+        <span class="discount-tag">-35%</span>
+      </div>
+      <p class="tax-note">IVA incluído · Portes gratuitos</p>
+      <p class="installment">💳 Ou 3x €56,66 sem juros</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- COLOR SELECTOR -->
+    <div>
+      <p class="option-label">Cor — <span style="color:#1a1a2e;text-transform:none;letter-spacing:0;">Midnight Black</span></p>
+      <div class="color-options">
+        <input type="radio" name="color" id="c-midnight" class="color-input" checked>
+        <label for="c-midnight" class="color-label color-midnight" title="Midnight Black"></label>
+
+        <input type="radio" name="color" id="c-white" class="color-input">
+        <label for="c-white" class="color-label color-white" title="Pearl White"></label>
+
+        <input type="radio" name="color" id="c-red" class="color-input">
+        <label for="c-red" class="color-label color-red" title="Crimson Red"></label>
+
+        <input type="radio" name="color" id="c-blue" class="color-input">
+        <label for="c-blue" class="color-label color-blue" title="Ocean Blue"></label>
+      </div>
+    </div>
+
+    <!-- VARIANT SELECTOR -->
+    <div>
+      <p class="option-label">Versão</p>
+      <div class="variant-options">
+        <input type="radio" name="variant" id="v-standard" class="variant-input" checked>
+        <label for="v-standard" class="variant-label">Standard</label>
+
+        <input type="radio" name="variant" id="v-pro" class="variant-input">
+        <label for="v-pro" class="variant-label">Pro</label>
+
+        <input type="radio" name="variant" id="v-studio" class="variant-input">
+        <label for="v-studio" class="variant-label">Studio</label>
+      </div>
+    </div>
+
+    <!-- QUANTITY -->
+    <div>
+      <p class="option-label" style="margin-bottom:12px;">Quantidade</p>
+      <div class="quantity-row">
+        <div class="qty-control">
+          <button class="qty-btn">−</button>
+          <div class="qty-display">1</div>
+          <button class="qty-btn">+</button>
+        </div>
+        <span class="stock-info"><span class="stock-icon">●</span> 23 em stock · Envio hoje</span>
+      </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+      <button class="btn-primary">🛒 Adicionar ao Carrinho</button>
+      <button class="btn-secondary">⚡ Comprar Já</button>
+      <button class="btn-wishlist">♡</button>
+    </div>
+
+    <!-- DELIVERY INFO -->
+    <div class="delivery-section">
+      <div class="delivery-item">
+        <span class="delivery-icon">🚚</span>
+        <div class="delivery-text">
+          <strong>Entrega Gratuita</strong>
+          <span>Envio express — estimativa: 1-2 dias úteis</span>
+        </div>
+      </div>
+      <div class="delivery-item">
+        <span class="delivery-icon">↩️</span>
+        <div class="delivery-text">
+          <strong>Devolução Gratuita</strong>
+          <span>30 dias para devolver sem custos</span>
+        </div>
+      </div>
+      <div class="delivery-item">
+        <span class="delivery-icon">🛡️</span>
+        <div class="delivery-text">
+          <strong>Garantia 2 Anos</strong>
+          <span>Garantia oficial AudioMax Portugal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="share-row">
+      <span class="share-label">Partilhar:</span>
+      <a href="#" class="share-btn share-fb">f</a>
+      <a href="#" class="share-btn share-tw">𝕏</a>
+      <a href="#" class="share-btn share-ig">✦</a>
+      <a href="#" class="share-btn share-wa">W</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- TABS SECTION -->
+<div class="tabs-section">
+  <input type="radio" name="tabs" id="tab1" class="tab-input" checked>
+  <input type="radio" name="tabs" id="tab2" class="tab-input">
+  <input type="radio" name="tabs" id="tab3" class="tab-input">
+  <input type="radio" name="tabs" id="tab4" class="tab-input">
+
+  <div class="tabs">
+    <label for="tab1" class="tab-label">Descrição</label>
+    <label for="tab2" class="tab-label">Especificações</label>
+    <label for="tab3" class="tab-label">Avaliações (2.847)</label>
+    <label for="tab4" class="tab-label">FAQ</label>
+  </div>
+
+  <div class="tab-contents">
+
+    <!-- DESCRIPTION -->
+    <div class="tab-content" id="content1">
+      <div class="desc-grid">
+        <div class="desc-text">
+          <h3>Experiência Sonora Sem Paralelo</h3>
+          <p>Os Headphones Pro X1 representam o pico da engenharia de áudio premium. Com tecnologia de cancelamento de ruído ativo de última geração, proporcionam uma experiência de audição completamente imersiva, seja no escritório, no avião ou na rua.</p>
+          <p>Equipados com drivers de 40mm de alta fidelidade e codec aptX HD, oferecem áudio cristalino em todo o espectro de frequências, desde os graves profundos até aos agudos mais delicados.</p>
+          <ul class="feature-list">
+            <li>Cancelamento de ruído ativo (ANC) adaptativo</li>
+            <li>40 horas de autonomia com uma carga</li>
+            <li>Carga rápida — 10 min = 4 horas de uso</li>
+            <li>Bluetooth 5.3 com alcance de 30 metros</li>
+            <li>Multipoint — conecta a 2 dispositivos simultâneos</li>
+            <li>Microfone integrado com IA para chamadas limpas</li>
+            <li>Almofadas em couro sintético respirável</li>
+            <li>Dobrável — cabe facilmente em qualquer mochila</li>
+          </ul>
+        </div>
+        <div class="desc-visual">
+          <svg viewBox="0 0 280 280" width="280" height="280" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="140" cy="140" r="120" stroke="rgba(233,69,96,0.3)" stroke-width="1" fill="none"/>
+            <circle cx="140" cy="140" r="90" stroke="rgba(233,69,96,0.2)" stroke-width="1" fill="none"/>
+            <circle cx="140" cy="140" r="60" stroke="rgba(233,69,96,0.15)" stroke-width="1" fill="none"/>
+            <path d="M60 140 Q60 50 140 50 Q220 50 220 140" stroke="#e94560" stroke-width="10" fill="none" stroke-linecap="round"/>
+            <ellipse cx="52" cy="153" rx="24" ry="32" fill="#e94560"/>
+            <ellipse cx="52" cy="153" rx="14" ry="20" fill="#c0392b"/>
+            <ellipse cx="228" cy="153" rx="24" ry="32" fill="#e94560"/>
+            <ellipse cx="228" cy="153" rx="14" ry="20" fill="#c0392b"/>
+            <!-- Sound waves -->
+            <g opacity="0.8">
+              <path d="M260 130 Q265 143 260 156" stroke="#f5a623" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M270 122 Q278 143 270 164" stroke="#f5a623" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M20 130 Q15 143 20 156" stroke="#f5a623" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M10 122 Q2 143 10 164" stroke="#f5a623" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </g>
+            <!-- LED -->
+            <circle cx="64" cy="146" r="3" fill="#00ff88"/>
+            <text x="140" y="148" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-family="Arial" font-weight="bold">PRO X1</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIFICATIONS -->
+    <div class="tab-content" id="content2">
+      <table class="specs-table">
+        <tr>
+          <td>Modelo</td>
+          <td>AudioMax Headphones Pro X1</td>
+        </tr>
+        <tr>
+          <td>Tipo</td>
+          <td>Over-ear, Fechado</td>
+        </tr>
+        <tr>
+          <td>Driver</td>
+          <td>40mm, Neodímio</td>
+        </tr>
+        <tr>
+          <td>Resposta em Freq.</td>
+          <td>20Hz – 20kHz (ANC: 10Hz – 22kHz)</td>
+        </tr>
+        <tr>
+          <td>Impedância</td>
+          <td>32 Ohm</td>
+        </tr>
+        <tr>
+          <td>Sensibilidade</td>
+          <td>105 dB SPL/mW</td>
+        </tr>
+        <tr>
+          <td>Bluetooth</td>
+          <td>5.3 — aptX HD, AAC, SBC, LDAC</td>
+        </tr>
+        <tr>
+          <td>Alcance</td>
+          <td>Até 30 metros (linha de visão)</td>
+        </tr>
+        <tr>
+          <td>Autonomia</td>
+          <td>40h (ANC desligado) / 28h (ANC ligado)</td>
+        </tr>
+        <tr>
+          <td>Carga</td>
+          <td>USB-C · Carga rápida: 10 min → 4h</td>
+        </tr>
+        <tr>
+          <td>Cancelamento Ruído</td>
+          <td>ANC Adaptativo até −40dB</td>
+        </tr>
+        <tr>
+          <td>Microfone</td>
+          <td>Duplo, beamforming, IA noise reduction</td>
+        </tr>
+        <tr>
+          <td>Peso</td>
+          <td>252g</td>
+        </tr>
+        <tr>
+          <td>Conectividade</td>
+          <td>Multipoint (2 dispositivos) · NFC pairing</td>
+        </tr>
+        <tr>
+          <td>Almofadas</td>
+          <td>Couro sintético respirável, memória de forma</td>
+        </tr>
+        <tr>
+          <td>Cores</td>
+          <td>Midnight Black, Pearl White, Crimson Red, Ocean Blue</td>
+        </tr>
+        <tr>
+          <td>Garantia</td>
+          <td>2 anos — AudioMax Portugal</td>
+        </tr>
+        <tr>
+          <td>Conteúdo da Caixa</td>
+          <td>Headphones Pro X1 · Cabo USB-C · Cabo Jack 3.5mm · Bolsa de transporte · Manual</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="tab-content" id="content3">
+      <div class="reviews-header">
+        <div class="rating-summary">
+          <div class="big-rating">4.9</div>
+          <div class="big-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="rating-meta">Baseado em 2.847 avaliações</div>
+        </div>
+        <div class="rating-bars">
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">5 ★</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:87%;"></div>
+            </div>
+            <span class="rating-bar-count">87%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">4 ★</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:9%;"></div>
+            </div>
+            <span class="rating-bar-count">9%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">3 ★</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:3%;"></div>
+            </div>
+            <span class="rating-bar-count">3%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">2 ★</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:1%;"></div>
+            </div>
+            <span class="rating-bar-count">1%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">1 ★</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:0%;"></div>
+            </div>
+            <span class="rating-bar-count">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-list">
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="avatar avatar-blue">MF</div>
+              <div>
+                <div class="reviewer-name">Miguel Ferreira</div>
+                <div class="reviewer-date">14 de Janeiro, 2025</div>
+              </div>
+            </div>
+            <div>
+              <div class="review-stars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <div class="verified-purchase">✓ Compra Verificada</div>
+            </div>
+          </div>
+          <div class="review-title">Os melhores headphones que já tive!</div>
+          <div class="review-text">Absolutamente incríveis. O cancelamento de ruído é tão eficaz que literalmente não ouço nada do escritório à minha volta. A qualidade do som é de audiófilo, e a autonomia de 40 horas é real — testei. O conforto durante longas sessões de trabalho é excecional. Já recomendei a três amigos e todos compraram.</div>
+          <div class="review-helpful">
+            <span>Esta avaliação foi útil?</span>
+            <button class="helpful-btn">👍 Sim (48)</button>
+            <button class="helpful-btn">👎 Não (2)</button>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="avatar avatar-red">AS</div>
+              <div>
+                <div class="reviewer-name">Ana Sousa</div>
+                <div class="reviewer-date">8 de Janeiro, 2025</div>
+              </div>
+            </div>
+            <div>
+              <div class="review-stars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <div class="verified-purchase">✓ Compra Verificada</div>
+            </div>
+          </div>
+          <div class="review-title">Qualidade de som extraordinária para o preço</div>
+          <div class="review-text">Usei outros headphones premium (B&W, Sony, Bose) e estes estão ao mesmo nível mas a metade do preço. O modo transparência é perfeito para quando preciso ouvir o ambiente. O microfone surpreende pela qualidade em chamadas. A bolsa de transporte é um bónus excelente. Só melhorava o app de personalização de EQ.</div>
+          <div class="review-helpful">
+            <span>Esta avaliação foi útil?</span>
+            <button class="helpful-btn">👍 Sim (31)</button>
+            <button class="helpful-btn">👎 Não (0)</button>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="avatar avatar-green">JL</div>
+              <div>
+                <div class="reviewer-name">João Lima</div>
+                <div class="reviewer-date">2 de Janeiro, 2025</div>
+              </div>
+            </div>
+            <div>
+              <div class="review-stars">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span style="color:#ddd;">★</span>
+              </div>
+              <div class="verified-purchase">✓ Compra Verificada</div>
+            </div>
+          </div>
+          <div class="review-title">Quase perfeitos — pequeno detalhe a melhorar</div>
+          <div class="review-text">O som e o ANC são fantásticos, sem discussão. Retiro uma estrela porque ao fim de 4-5 horas de uso contínuo as almofadas aquecem um pouco. Nada insuportável, mas perceptível. Fora isso, são headphones premium a um preço muito competitivo. A entrega foi super rápida e a embalagem está impecável.</div>
+          <div class="review-helpful">
+            <span>Esta avaliação foi útil?</span>
+            <button class="helpful-btn">👍 Sim (19)</button>
+            <button class="helpful-btn">👎 Não (1)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="tab-content" id="content4">
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq1" class="faq-input">
+          <label for="faq1" class="faq-question">O Pro X1 é compatível com dispositivos Apple?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Sim, o Pro X1 é totalmente compatível com todos os dispositivos Apple — iPhone, iPad, Mac e Apple Watch. Suporta o codec AAC que garante a melhor qualidade de áudio nos dispositivos Apple. O pairing é imediato e pode usar o Siri através do microfone integrado.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq2" class="faq-input">
+          <label for="faq2" class="faq-question">Quanto tempo demora a carga completa?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">A carga completa demora aproximadamente 2 horas via USB-C. Com a carga rápida, 10 minutos de carga proporcionam cerca de 4 horas de uso — ideal para quando se esquece de carregar. O cabo USB-C está incluído na caixa.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq3" class="faq-input">
+          <label for="faq3" class="faq-question">Posso usar com cabo sem bateria?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Sim! Inclui um cabo jack 3.5mm para uso com fio quando a bateria estiver descarregada ou em ambientes que não permitem Bluetooth (como alguns aviões mais antigos). Note que neste modo o ANC e o microfone não funcionam.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq4" class="faq-input">
+          <label for="faq4" class="faq-question">O cancelamento de ruído funciona com o Bluetooth desligado?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Não, o ANC requer que os headphones estejam ligados (Bluetooth ativo). No entanto, pode ativar o ANC mesmo sem estar conectado a nenhum dispositivo — basta ligar os headphones. Neste modo "silêncio", a autonomia é de aproximadamente 35 horas.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq5" class="faq-input">
+          <label for="faq5" class="faq-question">Qual é a política de garantia em Portugal?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">O Pro X1 tem 2 anos de garantia oficial em Portugal, conforme a legislação europeia. Em caso de defeito, pode contactar o suporte AudioMax diretamente pelo nosso site ou enviar o produto para reparação gratuita. Não cobre danos acidentais ou desgaste normal (almofadas, cabo).</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <input type="checkbox" id="faq6" class="faq-input">
+          <label for="faq6" class="faq-question">As almofadas são substituíveis?</label>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Sim! As almofadas são removíveis e substituíveis. Vendemos peças de substituição no nosso site por €24,99 o par. A substituição é simples e não requer ferramentas — basta girar e encaixar. Recomendamos substituição a cada 12-18 meses com uso intenso.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <div class="section-header">
+    <h2 class="section-title">Poderá também gostar</h2>
+    <a href="#" class="section-link">Ver todos →</a>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Card 1 -->
+    <a href="#" class="product-card">
+      <div class="card-image">
+        <span class="card-badge">Bestseller</span>
+        <span class="card-wishlist">♡</span>
+        <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="55" r="22" fill="none" stroke="#27ae60" stroke-width="5"/>
+          <circle cx="60" cy="55" r="12" fill="#27ae60" opacity="0.7"/>
+          <line x1="60" y1="77" x2="60" y2="95" stroke="#555" stroke-width="4"/>
+          <line x1="40" y1="95" x2="80" y2="95" stroke="#555" stroke-width="4"/>
+          <path d="M42 55 Q42 33 60 33 Q78 33 78 55" stroke="#27ae60" stroke-width="3" fill="none" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-brand">AudioMax</div>
+        <div class="card-title">Studio Mic Pro USB-C</div>
+        <div class="card-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          <span style="color:#888;font-size:0.75rem;margin-left:4px;">(1.2k)</span>
+        </div>
+        <div class="card-price-row">
+          <div>
+            <div class="card-price">€89,99</div>
+            <div class="card-price-old">€129,99</div>
+          </div>
+          <button class="card-btn">+ Cart</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="#" class="product-card">
+      <div class="card-image">
+        <span class="card-wishlist">♡</span>
+        <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="60" rx="28" ry="20" fill="none" stroke="#0f3460" stroke-width="5"/>
+          <ellipse cx="60" cy="60" rx="14" ry="10" fill="#0f3460" opacity="0.8"/>
+          <ellipse cx="60" cy="60" rx="6" ry="4" fill="#e94560"/>
+          <circle cx="60" cy="60" r="2" fill="white"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-brand">AudioMax</div>
+        <div class="card-title">Altifalante Portátil BT360</div>
+        <div class="card-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          <span style="color:#888;font-size:0.75rem;margin-left:4px;">(987)</span>
+        </div>
+        <div class="card-price-row">
+          <div>
+            <div class="card-price">€59,99</div>
+            <div class="card-price-old">€79,99</div>
+          </div>
+          <button class="card-btn">+ Cart</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="#" class="product-card">
+      <div class="card-image">
+        <span class="card-badge">Novo</span>
+        <span class="card-wishlist">♡</span>
+        <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="18" fill="#f5a623"/>
+          <circle cx="60" cy="60" r="10" fill="#e67e22"/>
+          <circle cx="60" cy="60" r="4" fill="#333"/>
+          <!-- eartip shape -->
+          <ellipse cx="60" cy="78" rx="5" ry="12" fill="#f5a623" opacity="0.8"/>
+          <!-- Left -->
+          <circle cx="28" cy="60" r="18" fill="#f5a623"/>
+          <circle cx="28" cy="60" r="10" fill="#e67e22"/>
+          <circle cx="28" cy="60" r="4" fill="#333"/>
+          <ellipse cx="28" cy="78" rx="5" ry="12" fill="#f5a623" opacity="0.8"/>
+          <!-- case hint -->
+          <rect x="36" y="20" width="48" height="28" rx="14" fill="rgba(245,166,35,0.3)" stroke="#f5a623" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-brand">AudioMax</div>
+        <div class="card-title">Earbuds Air TWS Pro</div>
+        <div class="card-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          <span style="color:#888;font-size:0.75rem;margin-left:4px;">(2.1k)</span>
+        </div>
+        <div class="card-price-row">
+          <div>
+            <div class="card-price">€79,99</div>
+            <div class="card-price-old">€119,99</div>
+          </div>
+          <button class="card-btn">+ Cart</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card 4 -->
+    <a href="#" class="product-card">
+      <div class="card-image">
+        <span class="card-wishlist">♡</span>
+        <svg viewBox="0 0 120 120" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+          <!-- DAC/Amp device -->
+          <rect x="20" y="35" width="80" height="50" rx="10" fill="#2c3e50"/>
+          <rect x="25" y="40" width="70" height="40" rx="7" fill="#1a252f"/>
+          <!-- Screen -->
+          <rect x="30" y="45" width="35" height="28" rx="4" fill="#00d4aa" opacity="0.3"/>
+          <text x="47" y="63" text-anchor="middle" fill="#00d4aa" font-size="9" font-family="monospace">88.2</text>
+          <text x="47" y="72" text-anchor="middle" fill="#00d4aa" font-size="6" font-family="monospace">kHz</text>
+          <!-- Knob -->
+          <circle cx="82" cy="59" r="10" fill="#555"/>
+          <circle cx="82" cy="59" r="7" fill="#444"/>
+          <line x1="82" y1="52" x2="82" y2="57" stroke="#aaa" stroke-width="2"/>
+          <!-- Ports -->
+          <circle cx="35" cy="95" r="4" fill="#888" opacity="0.5"/>
+          <rect x="50" y="91" width="10" height="8" rx="2" fill="#888" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-brand">AudioMax</div>
+        <div class="card-title">DAC/Amp Portátil HD</div>
+        <div class="card-stars">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          <span style="color:#888;font-size:0.75rem;margin-left:4px;">(445)</span>
+        </div>
+        <div class="card-price-row">
+          <div>
+            <div class="card-price">€149,99</div>
+            <div class="card-price-old">€199,99</div>
+          </div>
+          <button class="card-btn">+ Cart</button>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">AudioMax</div>
+      <p class="footer-desc">A sua loja de referência para equipamento de áudio premium em Portugal. Qualidade profissional ao alcance de todos desde 2018.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">f</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">▶</a>
+        <a href="#" class="social-btn">✦</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Produtos</h4>
+      <ul class="footer-links">
+        <li><a href="#">Headphones</a></li>
+        <li><a href="#">Earbuds TWS</a></li>
+        <li><a href="#">Altifalantes</a></li>
+        <li><a href="#">Microfones</a></li>
+        <li><a href="#">DAC & Amplificadores</a></li>
+        <li><a href="#">Acessórios</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul class="footer-links">
+        <li><a href="#">Sobre Nós</a></li>
+        <li><a href="#">Carreiras</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Imprensa</a></li>
+        <li><a href="#">Parceiros</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul class="footer-links">
+        <li><a href="#">Centro de Ajuda</a></li>
+        <li><a href="#">Garantia</a></li>
+        <li><a href="#">Devoluções</a></li>
+        <li><a href="#">Rastrear Encomenda</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Serviço</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 AudioMax. Todos os direitos reservados. NIF: PT 514 123 456</span>
+    <div class="payment-icons">
+      <span class="payment-icon">VISA</span>
+      <span class="payment-icon">MC</span>
+      <span class="payment-icon">MB</span>
+      <span class="payment-icon">MBWay</span>
+      <span class="payment-icon">PayPal</span>
+      <span class="payment-icon">AMEX</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

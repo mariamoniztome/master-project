@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #1a1d27;
+    border-right: 1px solid #2d3148;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 28px 24px;
+    border-bottom: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-text span {
+    color: #8b5cf6;
+  }
+
+  .sidebar-nav {
+    padding: 20px 12px;
+    flex: 1;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #4a5568;
+    padding: 8px 12px 8px;
+    margin-top: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: background 0.2s;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .nav-item:hover {
+    background: #252840;
+    color: #e2e8f0;
+  }
+
+  .nav-item.active {
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.25);
+  }
+
+  .nav-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .nav-badge {
+    margin-left: auto;
+    background: #6366f1;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  .sidebar-footer {
+    padding: 16px 12px;
+    border-top: 1px solid #2d3148;
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #252840;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-role {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 1px;
+  }
+
+  .user-status {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    height: 68px;
+    background: #1a1d27;
+    border-bottom: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .page-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    flex: 1;
+  }
+
+  .page-title span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #64748b;
+    margin-left: 8px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #252840;
+    border: 1px solid #2d3148;
+    border-radius: 10px;
+    padding: 8px 14px;
+    width: 240px;
+  }
+
+  .search-icon {
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .search-bar input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #94a3b8;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .search-bar input::placeholder {
+    color: #4a5568;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #252840;
+    border: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    color: #94a3b8;
+    position: relative;
+  }
+
+  .icon-btn:hover {
+    background: #2d3148;
+  }
+
+  .notif-dot {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    width: 7px;
+    height: 7px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 1.5px solid #1a1d27;
+  }
+
+  .date-badge {
+    background: #252840;
+    border: 1px solid #2d3148;
+    border-radius: 10px;
+    padding: 7px 14px;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 28px;
+    flex: 1;
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .stat-card.blue::before { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .stat-card.green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+  .stat-card.purple::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .stat-card.orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+  .stat-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .stat-card.blue .stat-icon { background: rgba(99,102,241,0.15); }
+  .stat-card.green .stat-icon { background: rgba(16,185,129,0.15); }
+  .stat-card.purple .stat-icon { background: rgba(139,92,246,0.15); }
+  .stat-card.orange .stat-icon { background: rgba(245,158,11,0.15); }
+
+  .stat-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: #f1f5f9;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stat-change.up { color: #10b981; }
+  .stat-change.down { color: #ef4444; }
+
+  .stat-change span {
+    color: #64748b;
+    font-weight: 400;
+  }
+
+  /* CHARTS ROW */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 3px;
+  }
+
+  .card-action {
+    font-size: 12px;
+    color: #6366f1;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  /* BAR CHART */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 160px;
+    padding-bottom: 4px;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar-wrap {
+    width: 100%;
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 140px;
+  }
+
+  .bar {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    transition: opacity 0.2s;
+  }
+
+  .bar.primary { background: linear-gradient(180deg, #6366f1, #4f46e5); }
+  .bar.secondary { background: linear-gradient(180deg, #8b5cf6, #7c3aed); opacity: 0.6; }
+
+  .bar-label {
+    font-size: 10px;
+    color: #64748b;
+    text-align: center;
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
+  /* DONUT CHART */
+  .donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .donut-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+  }
+
+  .donut-svg {
+    width: 140px;
+    height: 140px;
+    transform: rotate(-90deg);
+  }
+
+  .donut-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-percent {
+    font-size: 26px;
+    font-weight: 800;
+    color: #f1f5f9;
+    line-height: 1;
+  }
+
+  .donut-label {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .donut-legend {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .donut-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .donut-legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .donut-legend-text {
+    font-size: 12px;
+    color: #94a3b8;
+    flex: 1;
+  }
+
+  .donut-legend-val {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  /* BOTTOM ROW */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .data-table th {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0 0 12px;
+    text-align: left;
+    border-bottom: 1px solid #2d3148;
+  }
+
+  .data-table td {
+    padding: 12px 0;
+    font-size: 13px;
+    color: #94a3b8;
+    border-bottom: 1px solid #1e2235;
+    vertical-align: middle;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    color: #e2e8f0;
+  }
+
+  .td-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .td-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .td-name {
+    font-weight: 600;
+    color: #e2e8f0;
+    font-size: 13px;
+  }
+
+  .td-email {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .status-badge.active {
+    background: rgba(16,185,129,0.15);
+    color: #10b981;
+  }
+
+  .status-badge.pending {
+    background: rgba(245,158,11,0.15);
+    color: #f59e0b;
+  }
+
+  .status-badge.inactive {
+    background: rgba(239,68,68,0.12);
+    color: #ef4444;
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ACTIVITY FEED */
+  .activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #1e2235;
+    position: relative;
+  }
+
+  .activity-item:last-child {
+    border-bottom: none;
+  }
+
+  .activity-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .activity-icon.green { background: rgba(16,185,129,0.15); }
+  .activity-icon.blue { background: rgba(99,102,241,0.15); }
+  .activity-icon.orange { background: rgba(245,158,11,0.15); }
+  .activity-icon.red { background: rgba(239,68,68,0.12); }
+  .activity-icon.purple { background: rgba(139,92,246,0.15); }
+
+  .activity-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-text {
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  .activity-text strong {
+    color: #e2e8f0;
+    font-weight: 600;
+  }
+
+  .activity-time {
+    font-size: 11px;
+    color: #4a5568;
+    margin-top: 3px;
+  }
+
+  /* PROGRESS CARD */
+  .progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .progress-name {
+    font-size: 13px;
+    color: #e2e8f0;
+    font-weight: 500;
+  }
+
+  .progress-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .progress-bar-bg {
+    height: 6px;
+    background: #252840;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+  }
+
+  /* MINI SPARK LINE */
+  .sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 36px;
+    margin-top: 4px;
+  }
+
+  .spark-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    background: rgba(99,102,241,0.3);
+    min-height: 4px;
+    transition: background 0.2s;
+  }
+
+  .spark-bar.highlight {
+    background: #6366f1;
+  }
+
+  /* METRIC INLINE */
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e2235;
+  }
+
+  .metric-row:last-child {
+    border-bottom: none;
+  }
+
+  .metric-label {
+    font-size: 13px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .metric-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .metric-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    color: #4a5568;
+    font-weight: 400;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1d27;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2d3148;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3d4168;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">N</div>
+    <div class="logo-text">Nova<span>Dash</span></div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+
+    <a class="nav-item active" href="#">
+      <div class="nav-icon">⊞</div>
+      Dashboard
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">📊</div>
+      Análises
+      <span class="nav-badge">Novo</span>
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">👥</div>
+      Utilizadores
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">🛒</div>
+      Encomendas
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">📦</div>
+      Produtos
+    </a>
+
+    <div class="nav-section-label">Sistema</div>
+
+    <a class="nav-item" href="#">
+      <div class="nav-icon">💬</div>
+      Mensagens
+      <span class="nav-badge">5</span>
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">📁</div>
+      Relatórios
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">⚙️</div>
+      Definições
+    </a>
+    <a class="nav-item" href="#">
+      <div class="nav-icon">🔒</div>
+      Segurança
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">MR</div>
+      <div class="user-info">
+        <div class="user-name">Miguel Rodrigues</div>
+        <div class="user-role">Administrador</div>
+      </div>
+      <div class="user-status"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="page-title">Dashboard <span>/ Visão Geral</span></div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Pesquisar...">
+    </div>
+    <div class="topbar-actions">
+      <div class="date-badge">📅 Jun 2025</div>
+      <div class="icon-btn">
+        🔔
+        <div class="notif-dot"></div>
+      </div>
+      <div class="icon-btn">⚡</div>
+      <div class="icon-btn">☰</div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+      <div class="stat-card blue">
+        <div class="stat-header">
+          <div class="stat-label">Receita Total</div>
+          <div class="stat-icon">💰</div>
+        </div>
+        <div class="stat-value">€84.250</div>
+        <div class="stat-change up">▲ +12,4% <span>vs mês anterior</span></div>
+        <div class="sparkline" style="margin-top:12px">
+          <div class="spark-bar" style="height:40%"></div>
+          <div class="spark-bar" style="height:60%"></div>
+          <div class="spark-bar" style="height:45%"></div>
+          <div class="spark-bar" style="height:70%"></div>
+          <div class="spark-bar" style="height:55%"></div>
+          <div class="spark-bar" style="height:80%"></div>
+          <div class="spark-bar" style="height:65%"></div>
+          <div class="spark-bar highlight" style="height:100%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card green">
+        <div class="stat-header">
+          <div class="stat-label">Novos Clientes</div>
+          <div class="stat-icon">👤</div>
+        </div>
+        <div class="stat-value">1.482</div>
+        <div class="stat-change up">▲ +8,7% <span>vs mês anterior</span></div>
+        <div class="sparkline" style="margin-top:12px">
+          <div class="spark-bar" style="height:55%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:40%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:75%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:50%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:85%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:60%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:70%; background:rgba(16,185,129,0.3)"></div>
+          <div class="spark-bar" style="height:100%; background:#10b981"></div>
+        </div>
+      </div>
+
+      <div class="stat-card purple">
+        <div class="stat-header">
+          <div class="stat-label">Encomendas</div>
+          <div class="stat-icon">📦</div>
+        </div>
+        <div class="stat-value">3.641</div>
+        <div class="stat-change up">▲ +5,2% <span>vs mês anterior</span></div>
+        <div class="sparkline" style="margin-top:12px">
+          <div class="spark-bar" style="height:60%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:80%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:50%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:65%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:45%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:90%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:75%; background:rgba(139,92,246,0.3)"></div>
+          <div class="spark-bar" style="height:100%; background:#8b5cf6"></div>
+        </div>
+      </div>
+
+      <div class="stat-card orange">
+        <div class="stat-header">
+          <div class="stat-label">Taxa Conv.</div>
+          <div class="stat-icon">📈</div>
+        </div>
+        <div class="stat-value">6,38%</div>
+        <div class="stat-change down">▼ -1,1% <span>vs mês anterior</span></div>
+        <div class="sparkline" style="margin-top:12px">
+          <div class="spark-bar" style="height:80%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:100%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:70%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:85%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:60%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:75%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:55%; background:rgba(245,158,11,0.3)"></div>
+          <div class="spark-bar" style="height:65%; background:#f59e0b"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-row">
+
+      <!-- BAR CHART -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Receita vs Despesa</div>
+            <div class="card-subtitle">Comparação mensal — 2025</div>
+          </div>
+          <span class="card-action">Ver tudo →</span>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:55%"></div>
+              <div class="bar secondary" style="height:40%"></div>
+            </div>
+            <div class="bar-label">Jan</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:70%"></div>
+              <div class="bar secondary" style="height:52%"></div>
+            </div>
+            <div class="bar-label">Fev</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:45%"></div>
+              <div class="bar secondary" style="height:60%"></div>
+            </div>
+            <div class="bar-label">Mar</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:80%"></div>
+              <div class="bar secondary" style="height:55%"></div>
+            </div>
+            <div class="bar-label">Abr</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:65%"></div>
+              <div class="bar secondary" style="height:48%"></div>
+            </div>
+            <div class="bar-label">Mai</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:95%"></div>
+              <div class="bar secondary" style="height:63%"></div>
+            </div>
+            <div class="bar-label">Jun</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:75%"></div>
+              <div class="bar secondary" style="height:58%"></div>
+            </div>
+            <div class="bar-label">Jul</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:88%"></div>
+              <div class="bar secondary" style="height:70%"></div>
+            </div>
+            <div class="bar-label">Ago</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:60%"></div>
+              <div class="bar secondary" style="height:45%"></div>
+            </div>
+            <div class="bar-label">Set</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:72%"></div>
+              <div class="bar secondary" style="height:50%"></div>
+            </div>
+            <div class="bar-label">Out</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:83%"></div>
+              <div class="bar secondary" style="height:62%"></div>
+            </div>
+            <div class="bar-label">Nov</div>
+          </div>
+          <div class="bar-group">
+            <div class="bar-wrap">
+              <div class="bar primary" style="height:100%"></div>
+              <div class="bar secondary" style="height:78%"></div>
+            </div>
+            <div class="bar-label">Dez</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#6366f1"></div>
+            Receita
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#8b5cf6; opacity:0.6"></div>
+            Despesa
+          </div>
+        </div>
+      </div>
+
+      <!-- DONUT CHART -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Canais de Venda</div>
+            <div class="card-subtitle">Distribuição atual</div>
+          </div>
+        </div>
+        <div class="donut-container">
+          <div class="donut-wrap">
+            <svg class="donut-svg" viewBox="0 0 100 100">
+              <!-- Background circle -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#252840" stroke-width="14"/>
+              <!-- Segment 1: Online Store 42% -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#6366f1" stroke-width="14"
+                stroke-dasharray="99.9 138.8" stroke-dashoffset="0"/>
+              <!-- Segment 2: Marketplace 28% -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#8b5cf6" stroke-width="14"
+                stroke-dasharray="66.6 172.1" stroke-dashoffset="-99.9"/>
+              <!-- Segment 3: Direct 18% -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#10b981" stroke-width="14"
+                stroke-dasharray="42.8 195.9" stroke-dashoffset="-166.5"/>
+              <!-- Segment 4: Other 12% -->
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#f59e0b" stroke-width="14"
+                stroke-dasharray="28.5 210.2" stroke-dashoffset="-209.3"/>
+            </svg>
+            <div class="donut-center">
+              <div class="donut-percent">42%</div>
+              <div class="donut-label">Loja Online</div>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="donut-legend-item">
+              <div class="donut-legend-color" style="background:#6366f1"></div>
+              <div class="donut-legend-text">Loja Online</div>
+              <div class="donut-legend-val">42%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color" style="background:#8b5cf6"></div>
+              <div class="donut-legend-text">Marketplace</div>
+              <div class="donut-legend-val">28%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color" style="background:#10b981"></div>
+              <div class="donut-legend-text">Direto</div>
+              <div class="donut-legend-val">18%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color" style="background:#f59e0b"></div>
+              <div class="donut-legend-text">Outros</div>
+              <div class="donut-legend-val">12%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+
+      <!-- TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Clientes Recentes</div>
+            <div class="card-subtitle">Últimos registos do sistema</div>
+          </div>
+          <span class="card-action">Ver todos →</span>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Utilizador</th>
+              <th>Plano</th>
+              <th>Valor</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="td-user">
+                  <div class="td-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">AM</div>
+                  <div>
+                    <div class="td-name">Ana Martins</div>
+                    <div class="td-email">ana@exemplo.pt</div>
+                  </div>
+                </div>
+              </td>
+              <td>Pro</td>
+              <td style="color:#10b981;font-weight:700">€49,00</td>
+              <td><span class="status-badge active"><span class="status-dot"></span>Ativo</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="td-user">
+                  <div class="td-avatar" style="background:linear-gradient(135deg,#10b981,#059669)">JS</div>
+                  <div>
+                    <div class="td-name">João Silva</div>
+                    <div class="td-email">joao@empresa.pt</div>
+                  </div>
+                </div>
+              </td>
+              <td>Business</td>
+              <td style="color:#10b981;font-weight:700">€199,00</td>
+              <td><span class="status-badge pending"><span class="status-dot"></span>Pendente</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="td-user">
+                  <div class="td-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706)">CF</div>
+                  <div>
+                    <div class="td-name">Carla Ferreira</div>
+                    <div class="td-email">carla@mail.pt</div>
+                  </div>
+                </div>
+              </td>
+              <td>Starter</td>
+              <td style="color:#10b981;font-weight:700">€19,00</td>
+              <td><span class="status-badge active"><span class="status-dot"></span>Ativo</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="td-user">
+                  <div class="td-avatar" style="background:linear-gradient(135deg,#ef4444,#dc2626)">RL</div>
+                  <div>
+                    <div class="td-name">Rui Lopes</div>
+                    <div class="td-email">rui@tech.pt</div>
+                  </div>
+                </div>
+              </td>
+              <td>Pro</td>
+              <td style="color:#ef4444;font-weight:700">€49,00</td>
+              <td><span class="status-badge inactive"><span class="status-dot"></span>Inativo</span></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="td-user">
+                  <div class="td-avatar" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">IC</div>
+                  <div>
+                    <div class="td-name">Inês Costa</div>
+                    <div class="td-email">ines@web.pt</div>
+                  </div>
+                </div>
+              </td>
+              <td>Business</td>
+              <td style="color:#10b981;font-weight:700">€199,00</td>
+              <td><span class="status-badge active"><span class="status-dot"></span>Ativo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ACTIVITY -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Atividade Recente</div>
+            <div class="card-subtitle">Últimas 24 horas</div>
+          </div>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon green">✅</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Pagamento recebido</strong> de Ana Martins — Plano Pro</div>
+              <div class="activity-time">há 5 minutos</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon blue">👤</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Novo utilizador</strong> registado — Inês Costa</div>
+              <div class="activity-time">há 23 minutos</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon orange">⚠️</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Pagamento pendente</strong> João Silva — €199,00</div>
+              <div class="activity-time">há 1 hora</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon purple">📦</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Encomenda #4821</strong> enviada para Lisboa</div>
+              <div class="activity-time">há 2 horas</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon red">❌</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Subscrição cancelada</strong> — Rui Lopes</div>
+              <div class="activity-time">há 3 horas</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon blue">📊</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>Relatório mensal</strong> gerado automaticamente</div>
+              <div class="activity-time">há 5 horas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS / METRICS -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Metas do Mês</div>
+            <div class="card-subtitle">Progresso atual — Junho</div>
+          </div>
+        </div>
+        <div class="progress-list" style="margin-bottom:20px">
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-name">Receita</span>
+              <span class="progress-val">84%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:84%; background:linear-gradient(90deg,#6366f1,#818cf8)"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-name">Novos Clientes</span>
+              <span class="progress-val">67%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:67%; background:linear-gradient(90deg,#10b981,#34d399)"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-name">Encomendas</span>
+              <span class="progress-val">91%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:91%; background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-header">
+              <span class="progress-name">Satisfação</span>
+              <span class="progress-val">78%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width:78%; background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid #2d3148; padding-top:16px">
+          <div class="card-title" style="font-size:13px; margin-bottom:8px">Resumo do Servidor</div>
+          <div class="metric-row">
+            <div class="metric-label">
+              <div class="metric-dot" style="background:#10b981"></div>
+              CPU
+            </div>
+            <div class="metric-value">34% <span class="metric-sub">/ 100%</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-label">
+              <div class="metric-dot" style="background:#6366f1"></div>
+              Memória
+            </div>
+            <div class="metric-value">6,2 GB <span class="metric-sub">/ 16 GB</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-label">
+              <div class="metric-dot" style="background:#f59e0b"></div>
+              Armazenamento
+            </div>
+            <div class="metric-value">248 GB <span class="metric-sub">/ 500 GB</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-label">
+              <div class="metric-dot" style="background:#8b5cf6"></div>
+              Uptime
+            </div>
+            <div class="metric-value">99,98% <span class="metric-sub">este mês</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

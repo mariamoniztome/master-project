@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Contacto</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      max-width: 620px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 2.5rem 2.5rem 2rem;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .card-header svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .card-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-header p {
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .card-body {
+      padding: 2.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1.4rem;
+      flex: 1;
+    }
+
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.45rem;
+    }
+
+    .form-group label .required {
+      color: #ef4444;
+      margin-left: 3px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: #111827;
+      background: #f9fafb;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #667eea;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    }
+
+    .form-group input:valid:not(:placeholder-shown),
+    .form-group textarea:valid:not(:placeholder-shown) {
+      border-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .form-group input:invalid:not(:placeholder-shown):not(:focus),
+    .form-group textarea:invalid:not(:placeholder-shown):not(:focus) {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.6;
+    }
+
+    .form-group .hint {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .checkbox-group .group-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.2rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #667eea;
+      flex-shrink: 0;
+    }
+
+    .checkbox-item span {
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .radio-group .group-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      width: 100%;
+      margin-bottom: 0.2rem;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .radio-item input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #667eea;
+      flex-shrink: 0;
+    }
+
+    .radio-item span {
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .privacy-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      margin-bottom: 1.75rem;
+      padding: 1rem;
+      background: #f0f4ff;
+      border-radius: 8px;
+      border: 1px solid #c7d2fe;
+    }
+
+    .privacy-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: #667eea;
+      flex-shrink: 0;
+    }
+
+    .privacy-row label {
+      font-size: 0.85rem;
+      color: #4b5563;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .privacy-row label a {
+      color: #667eea;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .privacy-row label a:hover {
+      text-decoration: underline;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 0.5rem 0 1.75rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-submit:hover {
+      opacity: 0.92;
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.35);
+    }
+
+    .btn-submit svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .card-footer {
+      padding: 1.2rem 2.5rem;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .card-footer svg {
+      width: 16px;
+      height: 16px;
+      color: #10b981;
+    }
+
+    .card-footer span {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 1rem;
+      }
+
+      .card-header {
+        padding: 2rem 1.5rem 1.75rem;
+      }
+
+      .card-body {
+        padding: 1.75rem 1.5rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .radio-group {
+        gap: 0.85rem;
+      }
+
+      .card-footer {
+        padding: 1.2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <div class="card-header">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0-9.75 6.75L2.25 6.75" />
+      </svg>
+      <h1>Entre em Contacto</h1>
+      <p>Preencha o formulário e responderemos o mais brevemente possível.</p>
+    </div>
+
+    <div class="card-body">
+      <form action="#" method="POST" novalidate>
+
+        <p class="section-title">Dados Pessoais</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="João"
+              required
+              minlength="2"
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <label for="apelido">Apelido <span class="required">*</span></label>
+            <input
+              type="text"
+              id="apelido"
+              name="apelido"
+              placeholder="Silva"
+              required
+              minlength="2"
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Endereço de E-mail <span class="required">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="joao.silva@exemplo.pt"
+            required
+            autocomplete="email"
+          >
+          <span class="hint">Utilizaremos este endereço para lhe responder.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              placeholder="+351 912 345 678"
+              autocomplete="tel"
+              pattern="[\+\d\s\-\(\)]{7,20}"
+            >
+          </div>
+          <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input
+              type="text"
+              id="empresa"
+              name="empresa"
+              placeholder="Nome da empresa"
+              autocomplete="organization"
+            >
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="section-title">Detalhes do Contacto</p>
+
+        <div class="form-group">
+          <label for="assunto">Assunto <span class="required">*</span></label>
+          <select id="assunto" name="assunto" required>
+            <option value="" disabled selected>Selecione um assunto…</option>
+            <option value="informacao">Pedido de Informação</option>
+            <option value="suporte">Suporte Técnico</option>
+            <option value="comercial">Proposta Comercial</option>
+            <option value="parceria">Parceria</option>
+            <option value="reclamacao">Reclamação</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="radio-group">
+          <span class="group-label">Prioridade</span>
+          <label class="radio-item">
+            <input type="radio" name="prioridade" value="baixa">
+            <span>Baixa</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="prioridade" value="normal" checked>
+            <span>Normal</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="prioridade" value="alta">
+            <span>Alta</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="prioridade" value="urgente">
+            <span>Urgente</span>
+          </label>
+        </div>
+
+        <div class="checkbox-group">
+          <span class="group-label">Como nos conheceu?</span>
+          <label class="checkbox-item">
+            <input type="checkbox" name="origem" value="pesquisa">
+            <span>Pesquisa na Internet</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="origem" value="redes_sociais">
+            <span>Redes Sociais</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="origem" value="recomendacao">
+            <span>Recomendação de um amigo</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="origem" value="publicidade">
+            <span>Publicidade</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="origem" value="outro_origem">
+            <span>Outro</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="mensagem">Mensagem <span class="required">*</span></label>
+          <textarea
+            id="mensagem"
+            name="mensagem"
+            placeholder="Descreva detalhadamente o motivo do seu contacto…"
+            required
+            minlength="10"
+          ></textarea>
+          <span class="hint">Mínimo de 10 caracteres.</span>
+        </div>
+
+        <div class="privacy-row">
+          <input type="checkbox" id="privacidade" name="privacidade" required>
+          <label for="privacidade">
+            Li e aceito a <a href="#">Política de Privacidade</a> e os
+            <a href="#">Termos e Condições</a>. Autorizo o tratamento dos meus dados
+            pessoais para efeitos de resposta ao presente contacto.
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+          </svg>
+          Enviar Mensagem
+        </button>
+
+      </form>
+    </div>
+
+    <div class="card-footer">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+      </svg>
+      <span>Os seus dados são protegidos e nunca partilhados com terceiros.</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

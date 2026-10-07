@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaPulse — Transforma a Tua Vida Digital</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a2e; background: #fff; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+    background: rgba(255,255,255,0.97);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6%;
+    height: 68px;
+  }
+  .nav-logo {
+    font-size: 1.6rem; font-weight: 800; letter-spacing: -1px;
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.95rem; font-weight: 600; color: #444;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #6c63ff; }
+  .nav-cta {
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff !important; padding: 10px 26px; border-radius: 50px;
+    font-weight: 700; font-size: 0.92rem;
+    box-shadow: 0 4px 18px rgba(108,99,255,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.45); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 6% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle,rgba(108,99,255,0.25),transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #c9b8ff; font-size: 0.82rem; font-weight: 700;
+    padding: 6px 18px; border-radius: 50px; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    font-weight: 900; color: #fff; line-height: 1.12;
+    letter-spacing: -1.5px; max-width: 820px; margin-bottom: 24px;
+  }
+  .hero h1 span {
+    background: linear-gradient(90deg,#a78bfa,#e040fb,#60efff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.22rem); color: rgba(255,255,255,0.7);
+    max-width: 560px; line-height: 1.75; margin-bottom: 44px;
+  }
+  .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff; padding: 16px 38px; border-radius: 50px;
+    font-weight: 800; font-size: 1.05rem;
+    box-shadow: 0 8px 30px rgba(108,99,255,0.5);
+    display: inline-block; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(108,99,255,0.6); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.25);
+    color: #fff; padding: 14px 36px; border-radius: 50px;
+    font-weight: 700; font-size: 1.05rem;
+    display: inline-block; transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.15); }
+  .hero-stats {
+    margin-top: 70px; display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2.1rem; font-weight: 900; color: #fff; letter-spacing: -1px; }
+  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); font-weight: 500; margin-top: 2px; }
+
+  /* LOGOS */
+  .logos-bar {
+    background: #f8f7ff; padding: 30px 6%; text-align: center;
+    border-bottom: 1px solid #ede9ff;
+  }
+  .logos-bar p { font-size: 0.8rem; color: #999; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 18px; }
+  .logos-row { display: flex; gap: 40px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .logo-item {
+    font-size: 1.15rem; font-weight: 800; color: #bbb; letter-spacing: -0.5px;
+  }
+
+  /* FEATURES */
+  .section { padding: 100px 6%; }
+  .section-label {
+    display: inline-block; font-size: 0.78rem; font-weight: 800;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: #6c63ff; margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(1.9rem, 4vw, 2.9rem); font-weight: 900;
+    color: #1a1a2e; letter-spacing: -1px; line-height: 1.2;
+    max-width: 580px; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1.05rem; color: #666; max-width: 520px;
+    line-height: 1.75; margin-bottom: 60px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+  .feature-card {
+    background: #fff;
+    border: 1.5px solid #ede9ff;
+    border-radius: 20px; padding: 36px 32px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg,#6c63ff,#e040fb);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(108,99,255,0.12); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon {
+    width: 54px; height: 54px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 22px;
+  }
+  .ic1 { background: #ede9ff; }
+  .ic2 { background: #fce4ec; }
+  .ic3 { background: #e0f7fa; }
+  .ic4 { background: #fff3e0; }
+  .ic5 { background: #e8f5e9; }
+  .ic6 { background: #f3e5f5; }
+  .feature-card h3 { font-size: 1.15rem; font-weight: 800; color: #1a1a2e; margin-bottom: 10px; }
+  .feature-card p { font-size: 0.93rem; color: #777; line-height: 1.7; }
+
+  /* HOW IT WORKS */
+  .how { background: linear-gradient(135deg,#f8f7ff,#fff0fa); padding: 100px 6%; }
+  .how-inner { max-width: 1100px; margin: 0 auto; }
+  .how-header { text-align: center; margin-bottom: 70px; }
+  .how-header .section-title, .how-header .section-sub { max-width: 100%; }
+  .steps { display: flex; gap: 0; position: relative; flex-wrap: wrap; justify-content: center; }
+  .step { flex: 1; min-width: 200px; max-width: 260px; text-align: center; padding: 0 20px; position: relative; }
+  .step-num {
+    width: 62px; height: 62px; border-radius: 50%;
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff; font-size: 1.4rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px; position: relative; z-index: 2;
+    box-shadow: 0 6px 20px rgba(108,99,255,0.4);
+  }
+  .step-connector {
+    position: absolute; top: 31px; left: calc(50% + 31px);
+    right: calc(-50% + 31px); height: 2px;
+    background: linear-gradient(90deg,#6c63ff,#e040fb);
+    z-index: 1;
+  }
+  .step:last-child .step-connector { display: none; }
+  .step h3 { font-size: 1rem; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+  .step p { font-size: 0.88rem; color: #777; line-height: 1.65; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 100px 6%; background: #fff; }
+  .testimonials .section-title, .testimonials .section-sub { margin-left: auto; margin-right: auto; text-align: center; }
+  .testimonials .section-label { display: block; text-align: center; }
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 26px; margin-top: 10px;
+  }
+  .test-card {
+    background: #faf9ff; border: 1.5px solid #ede9ff;
+    border-radius: 20px; padding: 32px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .test-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(108,99,255,0.1); }
+  .stars { color: #f59e0b; font-size: 1.1rem; margin-bottom: 16px; letter-spacing: 2px; }
+  .test-text { font-size: 0.97rem; color: #444; line-height: 1.75; font-style: italic; margin-bottom: 24px; }
+  .test-author { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1rem; color: #fff; flex-shrink: 0;
+  }
+  .av1 { background: linear-gradient(135deg,#6c63ff,#a78bfa); }
+  .av2 { background: linear-gradient(135deg,#e040fb,#f06292); }
+  .av3 { background: linear-gradient(135deg,#00b4d8,#48cae4); }
+  .av4 { background: linear-gradient(135deg,#f59e0b,#fbbf24); }
+  .av5 { background: linear-gradient(135deg,#10b981,#34d399); }
+  .av6 { background: linear-gradient(135deg,#ef4444,#f87171); }
+  .author-name { font-size: 0.93rem; font-weight: 800; color: #1a1a2e; }
+  .author-role { font-size: 0.8rem; color: #999; margin-top: 1px; }
+
+  /* PRICING */
+  .pricing { padding: 100px 6%; background: linear-gradient(135deg,#f8f7ff,#fff); }
+  .pricing-header { text-align: center; margin-bottom: 60px; }
+  .pricing-grid {
+    display: flex; gap: 28px; flex-wrap: wrap; justify-content: center;
+    max-width: 1000px; margin: 0 auto;
+  }
+  .price-card {
+    background: #fff; border: 2px solid #ede9ff;
+    border-radius: 24px; padding: 42px 36px;
+    flex: 1; min-width: 260px; max-width: 310px;
+    position: relative; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(108,99,255,0.12); }
+  .price-card.featured {
+    background: linear-gradient(145deg,#1a1a2e,#302b63);
+    border-color: transparent;
+    box-shadow: 0 20px 60px rgba(108,99,255,0.35);
+  }
+  .popular-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff; font-size: 0.72rem; font-weight: 800;
+    padding: 5px 16px; border-radius: 50px; letter-spacing: 1px;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .plan-name { font-size: 0.8rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #6c63ff; margin-bottom: 14px; }
+  .price-card.featured .plan-name { color: #a78bfa; }
+  .price-num { font-size: 3rem; font-weight: 900; color: #1a1a2e; letter-spacing: -2px; line-height: 1; }
+  .price-card.featured .price-num { color: #fff; }
+  .price-period { font-size: 0.85rem; color: #999; font-weight: 500; margin: 4px 0 22px; }
+  .price-card.featured .price-period { color: rgba(255,255,255,0.5); }
+  .price-desc { font-size: 0.9rem; color: #666; line-height: 1.65; margin-bottom: 28px; }
+  .price-card.featured .price-desc { color: rgba(255,255,255,0.65); }
+  .price-features { list-style: none; margin-bottom: 34px; }
+  .price-features li {
+    font-size: 0.9rem; color: #555; padding: 7px 0;
+    border-bottom: 1px solid #f0eeff;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.8); border-bottom-color: rgba(255,255,255,0.1); }
+  .price-features li::before {
+    content: '✓'; width: 20px; height: 20px; border-radius: 50%;
+    background: #ede9ff; color: #6c63ff; font-size: 0.72rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .price-card.featured .price-features li::before { background: rgba(108,99,255,0.3); color: #a78bfa; }
+  .btn-plan {
+    display: block; text-align: center; padding: 14px; border-radius: 50px;
+    font-weight: 800; font-size: 0.95rem; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-plan-outline {
+    border: 2px solid #6c63ff; color: #6c63ff;
+  }
+  .btn-plan-outline:hover { background: #6c63ff; color: #fff; }
+  .btn-plan-filled {
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff; box-shadow: 0 6px 20px rgba(108,99,255,0.4);
+  }
+  .btn-plan-filled:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(108,99,255,0.55); }
+
+  /* FAQ */
+  .faq { padding: 100px 6%; background: #fff; }
+  .faq-inner { max-width: 720px; margin: 0 auto; }
+  .faq-header { text-align: center; margin-bottom: 54px; }
+  .faq-item {
+    border: 1.5px solid #ede9ff; border-radius: 14px;
+    margin-bottom: 14px; overflow: hidden;
+  }
+  .faq-q {
+    padding: 22px 28px; font-size: 1rem; font-weight: 700;
+    color: #1a1a2e; display: flex; justify-content: space-between; align-items: center;
+    cursor: default;
+  }
+  .faq-q span { color: #6c63ff; font-size: 1.3rem; font-weight: 400; }
+  .faq-a { padding: 0 28px 22px; font-size: 0.93rem; color: #666; line-height: 1.75; }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg,#0f0c29,#302b63,#6c63ff);
+    padding: 100px 6%; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle,rgba(224,64,251,0.2),transparent 65%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+  }
+  .cta-banner h2 {
+    font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900;
+    color: #fff; letter-spacing: -1px; margin-bottom: 18px; position: relative;
+  }
+  .cta-banner p { font-size: 1.08rem; color: rgba(255,255,255,0.7); margin-bottom: 42px; position: relative; }
+  .cta-form { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .cta-form input[type="email"] {
+    padding: 16px 24px; border-radius: 50px; border: none; outline: none;
+    font-size: 1rem; width: 320px; max-width: 100%;
+    background: rgba(255,255,255,0.12);
+    color: #fff; border: 2px solid rgba(255,255,255,0.2);
+  }
+  .cta-form input[type="email"]::placeholder { color: rgba(255,255,255,0.5); }
+  .cta-form button {
+    padding: 16px 34px; border-radius: 50px; border: none; cursor: pointer;
+    background: linear-gradient(135deg,#6c63ff,#e040fb);
+    color: #fff; font-size: 1rem; font-weight: 800;
+    box-shadow: 0 6px 24px rgba(108,99,255,0.5);
+    transition: transform 0.2s;
+  }
+  .cta-form button:hover { transform: scale(1.04); }
+  .cta-note { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 16px; position: relative; }
+
+  /* FOOTER */
+  footer {
+    background: #0d0c1a; color: rgba(255,255,255,0.6);
+    padding: 70px 6% 36px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 40px; margin-bottom: 50px;
+  }
+  .footer-brand .nav-logo { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.45); max-width: 260px; }
+  .footer-col h4 { font-size: 0.8rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 0.88rem; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+  .footer-col ul li a:hover { color: #a78bfa; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.3); }
+  .footer-socials { display: flex; gap: 14px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; color: rgba(255,255,255,0.6);
+    transition: background 0.2s; font-weight: 700;
+  }
+  .social-btn:hover { background: rgba(108,99,255,0.4); color: #fff; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .steps { flex-direction: column; align-items: center; }
+    .step-connector { display: none; }
+    .step { max-width: 100%; padding: 0; }
+    .hero-stats { gap: 28px; }
+  }
+  @media (max-width: 500px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NovaPulse</div>
+  <ul class="nav-links">
+    <li><a href="#features">Funcionalidades</a></li>
+    <li><a href="#how">Como Funciona</a></li>
+    <li><a href="#pricing">Preços</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#cta" class="nav-cta">Começar Grátis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ Novo · Versão 3.0 Disponível</div>
+  <h1>A Plataforma que<br><span>Transforma Negócios</span><br>em Sucesso Digital</h1>
+  <p>Automatiza o teu marketing, gere os teus clientes e escala o teu negócio com uma ferramenta intuitiva, rápida e criada para empreendedores modernos.</p>
+  <div class="hero-buttons">
+    <a href="#cta" class="btn-primary">Começar Gratuitamente →</a>
+    <a href="#how" class="btn-secondary">Ver Como Funciona</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">48K+</div>
+      <div class="stat-label">Utilizadores Ativos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">€12M</div>
+      <div class="stat-label">Receita Gerada</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">99.9%</div>
+      <div class="stat-label">Uptime Garantido</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Avaliação Média</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS BAR -->
+<div class="logos-bar">
+  <p>Confiado por marcas que crescem</p>
+  <div class="logos-row">
+    <div class="logo-item">Techwave</div>
+    <div class="logo-item">PixelForge</div>
+    <div class="logo-item">Luminary</div>
+    <div class="logo-item">NordBiz</div>
+    <div class="logo-item">Craftly</div>
+    <div class="logo-item">Zephyr Inc.</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div style="text-align:center;margin-bottom:60px;">
+    <span class="section-label">Funcionalidades</span>
+    <h2 class="section-title" style="max-width:100%;text-align:center;">Tudo o que Precisas<br>Num Só Lugar</h2>
+    <p class="section-sub" style="max-width:100%;text-align:center;margin:0 auto 0;">Ferramentas poderosas desenhadas para te poupar tempo e multiplicar os teus resultados.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon ic1">🚀</div>
+      <h3>Automação Inteligente</h3>
+      <p>Automatiza fluxos de trabalho complexos sem escrever uma linha de código. Configura em minutos e deixa o sistema trabalhar por ti.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon ic2">📊</div>
+      <h3>Analytics em Tempo Real</h3>
+      <p>Dashboards detalhados com métricas que realmente importam. Toma decisões baseadas em dados, não em suposições.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon ic3">💬</div>
+      <h3>CRM Integrado</h3>
+      <p>Gere todos os teus contactos, leads e clientes numa só plataforma. Nunca percas uma oportunidade de negócio.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon ic4">📧</div>
+      <h3>Email Marketing Pro</h3>
+      <p>Cria campanhas de email profissionais com editor drag-and-drop, segmentação avançada e A/B testing automático.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon ic5">🔒</div>
+      <h3>Segurança de Topo</h3>
+      <p>Encriptação AES-256, autenticação em dois fatores e conformidade total com o RGPD. Os teus dados estão sempre protegidos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon ic6">🔗</div>
+      <h3>500+ Integrações</h3>
+      <p>Conecta com as ferramentas que já usas: Stripe, Zapier, Shopify, WordPress, Slack e muito mais. API robusta disponível.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <span class="section-label">Como Funciona</span>
+      <h2 class="section-title" style="max-width:100%;text-align:center;">Em 4 Passos Simples<br>Estás Pronto a Crescer</h2>
+      <p class="section-sub" style="max-width:100%;text-align:center;margin:0 auto;">Configuração rápida, resultados imediatos. Sem curva de aprendizagem acentuada.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-connector"></div>
+        <h3>Cria a Tua Conta</h3>
+        <p>Regista-te gratuitamente em menos de 60 segundos. Sem cartão de crédito necessário.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-connector"></div>
+        <h3>Configura o Teu Espaço</h3>
+        <p>Usa os nossos templates pré-construídos ou personaliza tudo do zero.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-connector"></div>
+        <h3>Conecta as Tuas Ferramentas</h3>
+        <p>Integra com as plataformas que já usas em poucos cliques.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Vê os Resultados</h3>
+        <p>Acompanha o crescimento em tempo real e escala o teu negócio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <span class="section-label">Testemunhos</span>
+  <h2 class="section-title" style="text-align:center;max-width:100%;margin:0 auto 12px;">O Que Dizem os Nossos<br>Utilizadores</h2>
+  <p class="section-sub" style="text-align:center;max-width:100%;margin:0 auto 56px;">Histórias reais de pessoas reais que transformaram os seus negócios.</p>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"Em apenas 3 meses com o NovaPulse, a nossa receita aumentou 340%. A automação de email marketing por si só valeu o investimento todo. Ferramenta indispensável."</p>
+      <div class="test-author">
+        <div class="avatar av1">MR</div>
+        <div>
+          <div class="author-name">Miguel Rodrigues</div>
+          <div class="author-role">CEO · TechStart Lisboa</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"Finalmente uma plataforma que faz tudo o que promete. A integração com o Shopify foi perfeita e o suporte ao cliente é simplesmente incrível. Recomendo a toda a gente."</p>
+      <div class="test-author">
+        <div class="avatar av2">AP</div>
+        <div>
+          <div class="author-name">Ana Pereira</div>
+          <div class="author-role">Fundadora · Boutique Digital</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"Reduzi 8 horas de trabalho manual por semana. As automações são extremamente flexíveis e o analytics ajudou-nos a identificar os nossos melhores canais de aquisição."</p>
+      <div class="test-author">
+        <div class="avatar av3">JS</div>
+        <div>
+          <div class="author-name">João Santos</div>
+          <div class="author-role">Marketing Director · NordGroup</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"Como freelancer, precisava de uma solução que escalasse comigo. O NovaPulse cresceu com o meu negócio e hoje giro 40 clientes sem stress. Mudou tudo para mim."</p>
+      <div class="test-author">
+        <div class="avatar av4">CF</div>
+        <div>
+          <div class="author-name">Carla Ferreira</div>
+          <div class="author-role">Consultora Digital Freelance</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"O melhor investimento que fizemos este ano. O ROI é extraordinário — em 6 meses pagou-se 12 vezes. A equipa de onboarding foi fantástica desde o primeiro dia."</p>
+      <div class="test-author">
+        <div class="avatar av5">RL</div>
+        <div>
+          <div class="author-name">Rui Lopes</div>
+          <div class="author-role">COO · Craftly Agency</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="stars">★★★★★</div>
+      <p class="test-text">"Testei 7 plataformas diferentes antes desta. Nenhuma se comparou. A interface é linda, as funcionalidades são robustas e nunca tive problemas de downtime. 10/10."</p>
+      <div class="test-author">
+        <div class="avatar av6">SC</div>
+        <div>
+          <div class="author-name">Sofia Costa</div>
+          <div class="author-role">E-commerce Manager · Luminary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <span class="section-label">Preços</span>
+    <h2 class="section-title" style="max-width:100%;">Planos para Todos<br>os Tamanhos</h2>
+    <p class="section-sub" style="max-width:100%;margin:0 auto;">Sem contratos longos. Cancela quando quiseres.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="plan-name">Starter</div>
+      <div class="price-num">€0</div>
+      <div class="price-period">Para sempre grátis</div>
+      <p class="price-desc">Perfeito para explorar as funcionalidades e dar os primeiros passos.</p>
+      <ul class="price-features">
+        <li>Até 500 contactos</li>
+        <li>3 automações ativas</li>
+        <li>1 utilizador</li>
+        <li>Analytics básico</li>
+        <li>Suporte por email</li>
+      </ul>
+      <a href="#cta" class="btn-plan btn-plan-outline">Começar Grátis</a>
+    </div>
+    <div class="price-card featured">
+      <div class="popular-badge">🔥 Mais Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="price-num" style="color:#fff;">€29</div>
+      <div class="price-period">/mês · faturado mensalmente</div>
+      <p class="price-desc">Para negócios a crescer que precisam de automação avançada.</p>
+      <ul class="price-features">
+        <li>Até 25.000 contactos</li>
+        <li>Automações ilimitadas</li>
+        <li>5 utilizadores</li>
+        <li>Analytics avançado</li>
+        <li>Integrações prioritárias</li>
+        <li>Suporte 24/7 por chat</li>
+      </ul>
+      <a href="#cta" class="btn-plan btn-plan-filled">Experimentar 14 Dias</a>
+    </div>
+    <div class="price-card">
+      <div class="plan-name">Enterprise</div>
+      <div class="price-num">€99</div>
+      <div class="price-period">/mês · faturado mensalmente</div>
+      <p class="price-desc">Para equipas e empresas com necessidades avançadas e escala.</p>
+      <ul class="price-features">
+        <li>Contactos ilimitados</li>
+        <li>Tudo ilimitado</li>
+        <li>Utilizadores ilimitados</li>
+        <li>Analytics enterprise</li>
+        <li>API dedicada</li>
+        <li>Manager dedicado</li>
+      </ul>
+      <a href="#cta" class="btn-plan btn-plan-outline">Falar com Vendas</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title" style="max-width:100%;text-align:center;">Perguntas Frequentes</h2>
+      <p class="section-sub" style="max-width:100%;text-align:center;margin:0 auto;">Temos respostas para as tuas dúvidas.</p>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Preciso de cartão de crédito para começar?<span>+</span></div>
+      <div class="faq-a">Não, o plano Starter é completamente gratuito e não requer qualquer informação de pagamento. Só pedimos os teus dados de pagamento quando escolheres fazer upgrade para um plano pago.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso cancelar a qualquer momento?<span>+</span></div>
+      <div class="faq-a">Absolutamente. Não há contratos de longo prazo nem penalizações. Podes cancelar a tua subscrição a qualquer momento diretamente no painel de conta, sem precisar de contactar o suporte.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Os meus dados estão seguros?<span>+</span></div>
+      <div class="faq-a">A segurança é a nossa prioridade máxima. Usamos encriptação AES-256, backups automáticos diários e somos totalmente conformes com o RGPD. Os teus dados nunca são vendidos ou partilhados com terceiros.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Existe período de teste para os planos pagos?<span>+</span></div>
+      <div class="faq-a">Sim! O plano Pro vem com 14 dias de teste gratuito sem compromisso. Se não ficares 100% satisfeito, devolv-emos o dinheiro na integralidade nos primeiros 30 dias — garantia total.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Que tipo de suporte oferecem?<span>+</span></div>
+      <div class="faq-a">O plano Starter inclui suporte por email com resposta em 24h. O plano Pro tem suporte por chat ao vivo 24/7 com resposta em minutos. O Enterprise inclui um gestor de conta dedicado e linha telefónica direta.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso migrar os meus dados de outra plataforma?<span>+</span></div>
+      <div class="faq-a">Sim, e é mais fácil do que pensas! Temos ferramentas de migração nativas para as principais plataformas concorrentes. Para planos Pro e Enterprise, a nossa equipa faz a migração completa por ti, gratuitamente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner" id="cta">
+  <h2>Pronto para Transformar<br>o Teu Negócio?</h2>
+  <p>Junta-te a mais de 48.000 empreendedores que já usam o NovaPulse. Começa grátis hoje.</p>
+  <form class="cta-form" onsubmit="return false;">
+    <input type="email" placeholder="O teu endereço de email...">
+    <button type="submit">Começar Gratuitamente →</button>
+  </form>
+  <p class="cta-note">✓ Sem cartão de crédito &nbsp;·&nbsp; ✓ Configuração em 60 segundos &nbsp;·&nbsp; ✓ Cancela quando quiseres</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">NovaPulse</span>
+      <p>A plataforma de crescimento digital para empreendedores modernos. Simples, poderosa, eficaz.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produto</h4>
+      <ul>
+        <li><a href="#">Funcionalidades</a></li>
+        <li><a href="#">Preços</a></li>
+        <li><a href="#">Integrações</a></li>
+        <li><a href="#">Changelog</a></li>
+        <li><a href="#">Roadmap</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#">Sobre Nós</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Carreiras</a></li>
+        <li><a href="#">Imprensa</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Termos de Serviço</a></li>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Política de Cookies</a></li>
+        <li><a href="#">RGPD</a></li>
+        <li><a href="#">Segurança</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 NovaPulse. Todos os direitos reservados. Feito com ♥ em Portugal.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-btn">tw</a>
+      <a href="#" class="social-btn">in</a>
+      <a href="#" class="social-btn">fb</a>
+      <a href="#" class="social-btn">yt</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

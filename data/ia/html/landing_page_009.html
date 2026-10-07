@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NovaMente — Transforma a Tua Vida</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6c63ff;
+      --primary-dark: #574fd6;
+      --secondary: #ff6584;
+      --dark: #1a1a2e;
+      --darker: #0f0f1a;
+      --light: #f8f9ff;
+      --gray: #6b7280;
+      --light-gray: #e5e7eb;
+      --white: #ffffff;
+      --gradient: linear-gradient(135deg, #6c63ff 0%, #a78bfa 100%);
+      --gradient-2: linear-gradient(135deg, #ff6584 0%, #ff9a9e 100%);
+      --shadow: 0 20px 60px rgba(108, 99, 255, 0.2);
+      --shadow-sm: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--white);
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(108,99,255,0.1);
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      background: var(--gradient);
+      color: var(--white) !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: opacity 0.3s, transform 0.2s !important;
+      box-shadow: 0 4px 15px rgba(108,99,255,0.35);
+    }
+
+    .nav-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255,101,132,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(108,99,255,0.2);
+      border: 1px solid rgba(108,99,255,0.4);
+      color: #a78bfa;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 800px;
+    }
+
+    .hero h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gradient);
+      color: var(--white);
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 10px 40px rgba(108,99,255,0.45);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 50px rgba(108,99,255,0.55);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--white);
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 2px solid rgba(255,255,255,0.25);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-stat span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(108,99,255,0.1);
+      color: var(--primary);
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-center .section-subtitle {
+      margin: 0 auto;
+    }
+
+    /* ===== LOGOS / TRUST ===== */
+    .trust-section {
+      padding: 2.5rem 2rem;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .trust-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .trust-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+
+    .trust-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #c4c8d4;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== FEATURES ===== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: 20px;
+      padding: 2.2rem;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+      border-color: rgba(108,99,255,0.2);
+    }
+
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.4rem;
+      box-shadow: 0 8px 25px rgba(108,99,255,0.3);
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 100%);
+    }
+
+    .how-it-works .section-title {
+      color: var(--white);
+    }
+
+    .how-it-works .section-subtitle {
+      color: rgba(255,255,255,0.55);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+
+    .step {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--white);
+      margin: 0 auto 1.4rem;
+      box-shadow: 0 10px 30px rgba(108,99,255,0.4);
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .step p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 2px solid var(--light-gray);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 100%);
+      transform: scale(1.04);
+      box-shadow: var(--shadow);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.04) translateY(-6px);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient);
+      color: var(--white);
+      padding: 0.3rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .pricing-plan {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .pricing-card.featured .pricing-plan {
+      color: #a78bfa;
+    }
+
+    .pricing-price {
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .pricing-card.featured .pricing-price {
+      color: var(--white);
+    }
+
+    .pricing-price sup {
+      font-size: 1.3rem;
+      vertical-align: super;
+      font-weight: 700;
+    }
+
+    .pricing-period {
+      font-size: 0.88rem;
+      color: var(--gray);
+      margin-bottom: 1.8rem;
+    }
+
+    .pricing-card.featured .pricing-period {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      padding: 0.55rem 0;
+      color: var(--gray);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .pricing-card.featured .pricing-features li {
+      color: rgba(255,255,255,0.7);
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+
+    .pricing-features li:last-child {
+      border-bottom: none;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .btn-outline {
+      display: block;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 0.85rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-white {
+      display: block;
+      background: var(--white);
+      color: var(--primary);
+      padding: 0.85rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials {
+      background: var(--light);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.8rem;
+      margin-top: 3.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+    }
+
+    .stars {
+      color: #f59e0b;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: #374151;
+      font-size: 0.97rem;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .author-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: white;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .author-info strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .author-info span {
+      font-size: 0.82rem;
+      color: var(--gray);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      max-width: 720px;
+      margin: 3.5rem auto 0;
+    }
+
+    .faq-item {
+      border: 1px solid var(--light-gray);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .faq-item:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-question {
+      padding: 1.3rem 1.6rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--dark);
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: var(--primary);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .faq-answer {
+      padding: 0 1.6rem 1.3rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      background: var(--white);
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 50%, #ff6584 100%);
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-form input[type="email"] {
+      flex: 1;
+      min-width: 240px;
+      padding: 1rem 1.4rem;
+      border-radius: 50px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      font-family: inherit;
+      background: rgba(255,255,255,0.95);
+      color: var(--dark);
+    }
+
+    .cta-form input[type="email"]::placeholder {
+      color: #9ca3af;
+    }
+
+    .cta-form button {
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      border: none;
+      background: var(--dark);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+    }
+
+    .cta-form button:hover {
+      background: #0f0f1a;
+      transform: translateY(-2px);
+    }
+
+    .cta-note {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--darker);
+      color: rgba(255,255,255,0.55);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      margin-top: 1rem;
+      max-width: 280px;
+    }
+
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-col h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.7rem;
+    }
+
+    .footer-col ul a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.85rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+
+    .footer-legal a:hover {
+      color: var(--white);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .pricing-card.featured:hover {
+        transform: translateY(-6px);
+      }
+
+      .hero-stats {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="nav-logo">NovaMente</a>
+    <ul class="nav-links">
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
+      <li><a href="#como-funciona">Como Funciona</a></li>
+      <li><a href="#precos">Preços</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#comecar" class="nav-cta">Começar Grátis</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div style="position:relative;z-index:1;max-width:800px;">
+      <div class="hero-badge">✦ Novo em 2025</div>
+      <h1>
+        Transforma a Tua Produtividade com <span>Inteligência Real</span>
+      </h1>
+      <p>
+        NovaMente é a plataforma que combina gestão de tarefas, foco profundo
+        e análise inteligente para te ajudar a atingir os teus objetivos mais rápido.
+      </p>
+      <div class="hero-buttons">
+        <a href="#comecar" class="btn-primary">🚀 Começar Grátis — Sem Cartão</a>
+        <a href="#como-funciona" class="btn-secondary">▶ Ver Demonstração</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>50K+</strong>
+          <span>Utilizadores Ativos</span>
+        </div>
+        <div class="hero-stat">
+          <strong>4.9★</strong>
+          <span>Avaliação Média</span>
+        </div>
+        <div class="hero-stat">
+          <strong>98%</strong>
+          <span>Taxa de Satisfação</span>
+        </div>
+        <div class="hero-stat">
+          <strong>3×</strong>
+          <span>Mais Produtividade</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust-section">
+    <p class="trust-label">Utilizado por equipas de empresas líderes</p>
+    <div class="trust-logos">
+      <span class="trust-logo">TECHCORP</span>
+      <span class="trust-logo">Finova</span>
+      <span class="trust-logo">NEXUSLAB</span>
+      <span class="trust-logo">Orbitly</span>
+      <span class="trust-logo">VAULTX</span>
+      <span class="trust-logo">Stratum</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="funcionalidades">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Funcionalidades</span>
+        <h2 class="section-title">Tudo o que precisas num só lugar</h2>
+        <p class="section-subtitle">
+          Ferramentas pensadas para profissionais que querem resultados reais,
+          sem complicações desnecessárias.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Gestão de Objetivos</h3>
+          <p>Define metas claras, divide-as em micro-tarefas e acompanha o progresso em tempo real com dashboards visuais intuitivos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>Assistente com IA</h3>
+          <p>O nosso motor de inteligência artificial sugere prioridades, deteta padrões de procrastinação e adapta o teu plano automaticamente.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <h3>Modo Foco Profundo</h3>
+          <p>Sessões Pomodoro avançadas com rastreamento de tempo, bloqueio de distrações e relatórios de produtividade detalhados.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Análise e Relatórios</h3>
+          <p>Visualiza tendências semanais, identifica os teus picos de produtividade e toma decisões baseadas em dados reais.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤝</div>
+          <h3>Colaboração em Equipa</h3>
+          <p>Partilha projetos, atribui tarefas, comenta em tempo real e mantém toda a equipa alinhada com um único clique.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>+200 Integrações</h3>
+          <p>Conecta com Slack, Google Workspace, Notion, Zapier, Trello e muito mais. O teu fluxo de trabalho, sem interrupções.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="como-funciona" class="how-it-works">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag" style="background:rgba(108,99,255,0.25);color:#a78bfa;">Como Funciona</span>
+        <h2 class="section-title">Começa em 3 passos simples</h2>
+        <p class="section-subtitle">
+          Sem configurações complexas. Estás a poucos minutos de transformar
+          a tua produtividade.
+        </p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Cria a Tua Conta</h3>
+          <p>Regista-te gratuitamente com o teu e-mail ou Google em menos de 30 segundos. Sem cartão necessário.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Define os Teus Objetivos</h3>
+          <p>Diz-nos o que queres alcançar. A nossa IA cria um plano personalizado baseado nos teus hábitos e horários.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Executa e Melhora</h3>
+          <p>Trabalha com foco, acompanha o progresso e recebe sugestões inteligentes para melhorar a cada semana.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Celebra Resultados</h3>
+          <p>Alcança as tuas metas, partilha conquistas com a equipa e reinventa continuamente os teus limites.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="precos">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Preços</span>
+        <h2 class="section-title">Planos para cada fase da tua jornada</h2>
+        <p class="section-subtitle">
+          Começa de graça e escala conforme as tuas necessidades crescem.
+          Cancela a qualquer momento.
+        </p>
+      </div>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <p class="pricing-plan">Gratuito</p>
+          <div class="pricing-price"><sup>€</sup>0</div>
+          <p class="pricing-period">Para sempre · sem cartão</p>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Até 5 projetos ativos</li>
+            <li><span class="check">✓</span> 10 tarefas por projeto</li>
+            <li><span class="check">✓</span> Modo foco básico</li>
+            <li><span class="check">✓</span> Relatórios semanais</li>
+            <li><span class="check">✓</span> App mobile incluída</li>
+          </ul>
+          <a href="#comecar" class="btn-outline">Começar Grátis</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <span class="pricing-badge">⭐ Mais Popular</span>
+          <p class="pricing-plan">Pro</p>
+          <div class="pricing-price" style="color:white;"><sup>€</sup>12</div>
+          <p class="pricing-period">por mês · faturado anualmente</p>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Projetos ilimitados</li>
+            <li><span class="check">✓</span> Tarefas ilimitadas</li>
+            <li><span class="check">✓</span> Assistente com IA completo</li>
+            <li><span class="check">✓</span> Análises avançadas</li>
+            <li><span class="check">✓</span> +200 integrações</li>
+            <li><span class="check">✓</span> Suporte prioritário 24/7</li>
+          </ul>
+          <a href="#comecar" class="btn-white">Experimentar 14 Dias Grátis</a>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-plan">Equipa</p>
+          <div class="pricing-price"><sup>€</sup>38</div>
+          <p class="pricing-period">por mês · até 10 membros</p>
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Tudo do plano Pro</li>
+            <li><span class="check">✓</span> Gestão de equipa</li>
+            <li><span class="check">✓</span> Dashboards partilhados</li>
+            <li><span class="check">✓</span> SSO &amp; segurança avançada</li>
+            <li><span class="check">✓</span> Gestor de conta dedicado</li>
+          </ul>
+          <a href="#comecar" class="btn-outline">Falar com Vendas</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">Testemunhos</span>
+        <h2 class="section-title">O que dizem os nossos utilizadores</h2>
+        <p class="section-subtitle">
+          Mais de 50 000 pessoas já transformaram a sua produtividade com a NovaMente.
+        </p>
+      </div>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"A NovaMente mudou completamente a forma como trabalho. Em 3 semanas, consegui terminar um projeto que tinha adiado há meses. Recomendo a qualquer profissional sério."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AM</div>
+            <div class="author-info">
+              <strong>Ana Martins</strong>
+              <span>Designer UX · Lisboa</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Finalmente uma ferramenta que não me abandona a meio do caminho. O assistente de IA é incrível — parece que me conhece melhor do que eu próprio. Vale cada cêntimo."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RC</div>
+            <div class="author-info">
+              <strong>Ricardo Costa</strong>
+              <span>Empreendedor · Porto</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Usámos para gerir uma equipa de 8 pessoas num lançamento de produto. Entregámos tudo a tempo e dentro do orçamento. A funcionalidade de colaboração é excelente."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SF</div>
+            <div class="author-info">
+              <strong>Sofia Ferreira</strong>
+              <span>Product Manager · Braga</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Tentei dezenas de apps de produtividade. A NovaMente é a única que realmente cumpre o que promete. A integração com o Google Calendar é perfeita e funciona sem falhas."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JN</div>
+            <div class="author-info">
+              <strong>João Neves</strong>
+              <span>Desenvolvedor Web · Coimbra</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Como freelancer, precisava de algo que me ajudasse a gerir vários clientes em simultâneo. A NovaMente tornou-se a minha ferramenta central de trabalho desde o primeiro dia."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">CM</div>
+            <div class="author-info">
+              <strong>Carla Mendes</strong>
+              <span>Consultora de Marketing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Os relatórios de produtividade são um game-changer. Descobri que trabalho 40% melhor de manhã e ajustei a minha agenda. Parece óbvio, mas nunca teria chegado lá sozinho."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">TP</div>
+            <div class="author-info">
+              <strong>Tiago Pinto</strong>
+              <span>Gestor Financeiro · Faro</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Perguntas Frequentes</h2>
+        <p class="section-subtitle">
+          Tens dúvidas? Aqui estão as respostas às perguntas mais comuns.
+        </p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-question">Preciso de cartão de crédito para começar?</div>
+          <div class="faq-answer">Não. O plano gratuito é completamente gratuito e não requer qualquer método de pagamento. Podes criar a tua conta e começar a usar imediatamente sem qualquer compromisso financeiro.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Posso cancelar a subscrição a qualquer momento?</div>
+          <div class="faq-answer">Sim, podes cancelar quando quiseres, sem taxas ou penalidades. Se cancelares, mantens o acesso ao plano pago até ao fim do período faturado e depois passas automaticamente para o plano gratuito.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Os meus dados estão seguros?</div>
+          <div class="faq-answer">A segurança é a nossa prioridade máxima. Todos os dados são encriptados em trânsito (TLS 1.3) e em repouso (AES-256). Estamos em conformidade com o RGPD e realizamos auditorias de segurança regulares por terceiros independentes.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">O assistente de IA funciona em português?</div>
+          <div class="faq-answer">Sim! A nossa IA está completamente otimizada para português europeu e brasileiro. Podes interagir, fazer perguntas e receber sugestões no teu idioma nativo, sem perdas de qualidade.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Existe uma aplicação mobile disponível?</div>
+          <div class="faq-answer">Sim, a NovaMente está disponível para iOS e Android e está incluída em todos os planos, incluindo o gratuito. A sincronização entre dispositivos é instantânea e funciona também offline.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Como funciona o período de teste de 14 dias?</div>
+          <div class="faq-answer">Ao ativares o plano Pro, tens 14 dias para explorar todas as funcionalidades sem qualquer custo. Se não ficares satisfeito, cancela antes do fim do período e não te cobramos absolutamente nada. Garantido.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="comecar" class="cta-section">
+    <h2>Pronto para Transformar a Tua Produtividade?</h2>
+    <p>Junta-te a mais de 50 000 profissionais que já alcançaram mais com menos esforço. Começa hoje, de graça.</p>
+    <form class="cta-form" action="#" method="post">
+      <input type="email" name="email" placeholder="O teu melhor e-mail…" required />
+      <button type="submit">Começar Grátis →</button>
+    </form>
+    <p class="cta-note">✓ Grátis para sempre &nbsp;·&nbsp; ✓ Sem cartão &nbsp;·&nbsp; ✓ Configura em 30 segundos</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">NovaMente</span>
+        <p>A plataforma de produtividade inteligente que te ajuda a trabalhar com mais foco, clareza e resultados reais.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="#">Funcionalidades</a></li>
+          <li><a href="#">Preços</a></li>
+          <li><a href="#">Integrações</a></li>
+          <li><a href="#">Novidades</a></li>
+          <li><a href="#">Roadmap</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre Nós</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Carreiras</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Centro de Ajuda</a></li>
+          <li><a href="#">Documentação</a></li>
+          <li><a href="#">Status do Sistema</a></li>
+          <li><a href="#">Comunidade</a></li>
+          <li><a href="#">Parceiros</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NovaMente. Todos os direitos reservados.</p>
+      <div class="footer-legal">
+        <a href="#">Privacidade</a>
+        <a href="#">Termos de Uso</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

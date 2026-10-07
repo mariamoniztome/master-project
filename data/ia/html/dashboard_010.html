@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 240px;
+    background: #1a1d27;
+    border-right: 1px solid #2d3148;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px;
+    border-bottom: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-text span {
+    color: #6366f1;
+  }
+
+  .sidebar-nav {
+    padding: 16px 12px;
+    flex: 1;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #4a5568;
+    padding: 8px 8px 6px;
+    margin-top: 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #8892a4;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .nav-item:hover {
+    background: #252838;
+    color: #e2e8f0;
+  }
+
+  .nav-item.active {
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1));
+    color: #818cf8;
+    border: 1px solid rgba(99,102,241,0.25);
+  }
+
+  .nav-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .badge {
+    margin-left: auto;
+    background: #6366f1;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  .badge.red {
+    background: #ef4444;
+  }
+
+  .sidebar-footer {
+    padding: 16px 12px;
+    border-top: 1px solid #2d3148;
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #252838;
+    cursor: pointer;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    flex: 1;
+  }
+
+  .user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .user-role {
+    font-size: 11px;
+    color: #6b7280;
+  }
+
+  .user-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  /* Main Content */
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* Topbar */
+  .topbar {
+    background: #1a1d27;
+    border-bottom: 1px solid #2d3148;
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-left h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .topbar-left p {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 1px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-bar {
+    background: #252838;
+    border: 1px solid #2d3148;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #e2e8f0;
+    width: 220px;
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-bar span {
+    color: #4a5568;
+    font-size: 14px;
+  }
+
+  .search-bar input-text {
+    color: #6b7280;
+    font-size: 13px;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #252838;
+    border: 1px solid #2d3148;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+    color: #8892a4;
+  }
+
+  .icon-btn .dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    border: 2px solid #1a1d27;
+  }
+
+  /* Content */
+  .content {
+    padding: 28px;
+    flex: 1;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .stat-card.blue::before { background: linear-gradient(90deg, #6366f1, #8b5cf6); }
+  .stat-card.green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+  .stat-card.orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .stat-card.pink::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+  .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .stat-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .stat-icon.blue { background: rgba(99,102,241,0.15); }
+  .stat-icon.green { background: rgba(16,185,129,0.15); }
+  .stat-icon.orange { background: rgba(245,158,11,0.15); }
+  .stat-icon.pink { background: rgba(236,72,153,0.15); }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+
+  .stat-change {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .stat-change.up { color: #22c55e; }
+  .stat-change.down { color: #ef4444; }
+
+  .stat-change span {
+    color: #6b7280;
+    font-weight: 400;
+  }
+
+  /* Mini bar chart inside stat */
+  .mini-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 32px;
+    margin-top: 14px;
+  }
+
+  .mini-bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    opacity: 0.6;
+  }
+
+  .mini-bar.blue { background: #6366f1; }
+  .mini-bar.green { background: #10b981; }
+  .mini-bar.orange { background: #f59e0b; }
+  .mini-bar.pink { background: #ec4899; }
+
+  /* Charts Row */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: #1a1d27;
+    border: 1px solid #2d3148;
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+
+  .card-action {
+    font-size: 12px;
+    color: #6366f1;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  /* Bar Chart */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 160px;
+    padding-bottom: 28px;
+    position: relative;
+  }
+
+  .bar-chart::after {
+    content: '';
+    position: absolute;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #2d3148;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bar {
+    width: 12px;
+    border-radius: 4px 4px 0 0;
+    transition: opacity 0.2s;
+  }
+
+  .bar.primary { background: linear-gradient(180deg, #6366f1, #4f46e5); }
+  .bar.secondary { background: linear-gradient(180deg, #8b5cf6, #7c3aed); opacity: 0.5; }
+
+  .bar-label {
+    font-size: 10px;
+    color: #4a5568;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+
+  /* Horizontal grid lines */
+  .chart-grid {
+    position: relative;
+  }
+
+  .grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .grid-line {
+    border-top: 1px dashed #2d3148;
+    width: 100%;
+  }
+
+  /* Donut Chart */
+  .donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .donut-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 10px auto 20px;
+  }
+
+  .donut {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #6366f1 0deg 144deg,
+      #10b981 144deg 230deg,
+      #f59e0b 230deg 295deg,
+      #ec4899 295deg 360deg
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donut-inner {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #1a1d27;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donut-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .donut-label {
+    font-size: 10px;
+    color: #6b7280;
+  }
+
+  .legend {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .legend-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8892a4;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-right {
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+
+  .legend-pct {
+    color: #6b7280;
+    font-weight: 400;
+    margin-left: 6px;
+  }
+
+  /* Bottom Row */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #4a5568;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #2d3148;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(45,49,72,0.5);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: rgba(99,102,241,0.04);
+  }
+
+  tbody td {
+    padding: 11px 12px;
+    font-size: 13px;
+    color: #c4ccd8;
+  }
+
+  .product-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .product-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .product-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #e2e8f0;
+  }
+
+  .product-cat {
+    font-size: 11px;
+    color: #6b7280;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .status-pill::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+
+  .status-pill.success {
+    background: rgba(34,197,94,0.12);
+    color: #22c55e;
+  }
+  .status-pill.success::before { background: #22c55e; }
+
+  .status-pill.pending {
+    background: rgba(245,158,11,0.12);
+    color: #f59e0b;
+  }
+  .status-pill.pending::before { background: #f59e0b; }
+
+  .status-pill.failed {
+    background: rgba(239,68,68,0.12);
+    color: #ef4444;
+  }
+  .status-pill.failed::before { background: #ef4444; }
+
+  .progress-bar-wrap {
+    background: #252838;
+    border-radius: 4px;
+    height: 6px;
+    width: 80px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  }
+
+  /* Activity Feed */
+  .activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(45,49,72,0.5);
+    position: relative;
+  }
+
+  .activity-item:last-child {
+    border-bottom: none;
+  }
+
+  .activity-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .activity-body {
+    flex: 1;
+  }
+
+  .activity-text {
+    font-size: 12.5px;
+    color: #c4ccd8;
+    line-height: 1.4;
+  }
+
+  .activity-text strong {
+    color: #e2e8f0;
+    font-weight: 600;
+  }
+
+  .activity-time {
+    font-size: 11px;
+    color: #4a5568;
+    margin-top: 3px;
+  }
+
+  /* Goals */
+  .goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .goal-item {}
+
+  .goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+
+  .goal-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #c4ccd8;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .goal-icon {
+    font-size: 14px;
+  }
+
+  .goal-pct {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  .goal-bar-bg {
+    background: #252838;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .goal-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+  }
+
+  .goal-bar-fill.blue { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .goal-bar-fill.green { background: linear-gradient(90deg, #10b981, #34d399); }
+  .goal-bar-fill.orange { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .goal-bar-fill.pink { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+  .goal-meta {
+    font-size: 11px;
+    color: #4a5568;
+    margin-top: 4px;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 1200px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .bottom-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #1a1d27; }
+  ::-webkit-scrollbar-thumb { background: #2d3148; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">N</div>
+    <div class="logo-text">Nexus<span>IO</span></div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Principal</div>
+    <a class="nav-item active" href="#">
+      <span class="nav-icon">⊞</span> Dashboard
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">◈</span> Analytics
+      <span class="badge">New</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">◉</span> Relatórios
+    </a>
+
+    <div class="nav-label">Gestão</div>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">⬡</span> Produtos
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">⊕</span> Encomendas
+      <span class="badge red">5</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">◎</span> Clientes
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">⊗</span> Finanças
+    </a>
+
+    <div class="nav-label">Sistema</div>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">⊙</span> Definições
+    </a>
+    <a class="nav-item" href="#">
+      <span class="nav-icon">◌</span> Suporte
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="avatar">AM</div>
+      <div class="user-info">
+        <div class="user-name">Ana Martins</div>
+        <div class="user-role">Administradora</div>
+      </div>
+      <div class="user-status"></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1>Dashboard</h1>
+      <p>Bem-vinda de volta, Ana! Aqui está o resumo de hoje.</p>
+    </div>
+    <div class="topbar-right">
+      <div class="search-bar">
+        <span>⌕</span>
+        <span style="color:#4a5568;font-size:13px;">Pesquisar...</span>
+      </div>
+      <div class="icon-btn">
+        🔔
+        <div class="dot"></div>
+      </div>
+      <div class="icon-btn">⚙</div>
+      <div class="avatar" style="width:38px;height:38px;font-size:14px;cursor:pointer;">AM</div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Stats -->
+    <div class="stats-grid">
+
+      <div class="stat-card blue">
+        <div class="stat-header">
+          <div class="stat-title">Receita Total</div>
+          <div class="stat-icon blue">💰</div>
+        </div>
+        <div class="stat-value">€84,320</div>
+        <div class="stat-change up">
+          ▲ 12.4% <span>vs mês anterior</span>
+        </div>
+        <div class="mini-chart">
+          <div class="mini-bar blue" style="height:40%"></div>
+          <div class="mini-bar blue" style="height:55%"></div>
+          <div class="mini-bar blue" style="height:35%"></div>
+          <div class="mini-bar blue" style="height:65%"></div>
+          <div class="mini-bar blue" style="height:50%"></div>
+          <div class="mini-bar blue" style="height:72%"></div>
+          <div class="mini-bar blue" style="height:60%"></div>
+          <div class="mini-bar blue" style="height:85%"></div>
+          <div class="mini-bar blue" style="height:75%"></div>
+          <div class="mini-bar blue" style="height:95%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card green">
+        <div class="stat-header">
+          <div class="stat-title">Encomendas</div>
+          <div class="stat-icon green">📦</div>
+        </div>
+        <div class="stat-value">1,248</div>
+        <div class="stat-change up">
+          ▲ 8.1% <span>vs mês anterior</span>
+        </div>
+        <div class="mini-chart">
+          <div class="mini-bar green" style="height:60%"></div>
+          <div class="mini-bar green" style="height:45%"></div>
+          <div class="mini-bar green" style="height:70%"></div>
+          <div class="mini-bar green" style="height:55%"></div>
+          <div class="mini-bar green" style="height:80%"></div>
+          <div class="mini-bar green" style="height:65%"></div>
+          <div class="mini-bar green" style="height:90%"></div>
+          <div class="mini-bar green" style="height:75%"></div>
+          <div class="mini-bar green" style="height:85%"></div>
+          <div class="mini-bar green" style="height:100%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card orange">
+        <div class="stat-header">
+          <div class="stat-title">Novos Clientes</div>
+          <div class="stat-icon orange">👥</div>
+        </div>
+        <div class="stat-value">342</div>
+        <div class="stat-change down">
+          ▼ 3.2% <span>vs mês anterior</span>
+        </div>
+        <div class="mini-chart">
+          <div class="mini-bar orange" style="height:80%"></div>
+          <div class="mini-bar orange" style="height:70%"></div>
+          <div class="mini-bar orange" style="height:90%"></div>
+          <div class="mini-bar orange" style="height:60%"></div>
+          <div class="mini-bar orange" style="height:75%"></div>
+          <div class="mini-bar orange" style="height:50%"></div>
+          <div class="mini-bar orange" style="height:65%"></div>
+          <div class="mini-bar orange" style="height:55%"></div>
+          <div class="mini-bar orange" style="height:45%"></div>
+          <div class="mini-bar orange" style="height:40%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card pink">
+        <div class="stat-header">
+          <div class="stat-title">Taxa Conversão</div>
+          <div class="stat-icon pink">📈</div>
+        </div>
+        <div class="stat-value">5.67%</div>
+        <div class="stat-change up">
+          ▲ 1.8% <span>vs mês anterior</span>
+        </div>
+        <div class="mini-chart">
+          <div class="mini-bar pink" style="height:50%"></div>
+          <div class="mini-bar pink" style="height:60%"></div>
+          <div class="mini-bar pink" style="height:55%"></div>
+          <div class="mini-bar pink" style="height:75%"></div>
+          <div class="mini-bar pink" style="height:65%"></div>
+          <div class="mini-bar pink" style="height:80%"></div>
+          <div class="mini-bar pink" style="height:70%"></div>
+          <div class="mini-bar pink" style="height:85%"></div>
+          <div class="mini-bar pink" style="height:90%"></div>
+          <div class="mini-bar pink" style="height:95%"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+
+      <!-- Bar Chart Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Receita & Despesas</div>
+            <div class="card-subtitle">Comparativo dos últimos 7 meses</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8892a4;">
+              <div style="width:10px;height:10px;border-radius:2px;background:#6366f1;"></div>Receita
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8892a4;">
+              <div style="width:10px;height:10px;border-radius:2px;background:#8b5cf6;opacity:0.5;"></div>Despesas
+            </div>
+            <div class="card-action">Ver tudo →</div>
+          </div>
+        </div>
+
+        <!-- Y axis labels + chart -->
+        <div style="display:flex;gap:12px;">
+          <div style="display:flex;flex-direction:column;justify-content:space-between;height:160px;padding-bottom:28px;padding-right:4px;">
+            <div style="font-size:10px;color:#4a5568;">100k</div>
+            <div style="font-size:10px;color:#4a5568;">75k</div>
+            <div style="font-size:10px;color:#4a5568;">50k</div>
+            <div style="font-size:10px;color:#4a5568;">25k</div>
+            <div style="font-size:10px;color:#4a5568;">0</div>
+          </div>
+          <div style="flex:1;position:relative;">
+            <div class="grid-lines">
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+              <div class="grid-line"></div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:72%"></div>
+                  <div class="bar secondary" style="height:48%"></div>
+                </div>
+                <div class="bar-label">Jan</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:58%"></div>
+                  <div class="bar secondary" style="height:42%"></div>
+                </div>
+                <div class="bar-label">Fev</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:85%"></div>
+                  <div class="bar secondary" style="height:55%"></div>
+                </div>
+                <div class="bar-label">Mar</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:65%"></div>
+                  <div class="bar secondary" style="height:50%"></div>
+                </div>
+                <div class="bar-label">Abr</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:92%"></div>
+                  <div class="bar secondary" style="height:68%"></div>
+                </div>
+                <div class="bar-label">Mai</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:78%"></div>
+                  <div class="bar secondary" style="height:60%"></div>
+                </div>
+                <div class="bar-label">Jun</div>
+              </div>
+              <div class="bar-group">
+                <div class="bars">
+                  <div class="bar primary" style="height:95%"></div>
+                  <div class="bar secondary" style="height:72%"></div>
+                </div>
+                <div class="bar-label">Jul</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donut Chart Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Vendas por Canal</div>
+            <div class="card-subtitle">Distribuição atual</div>
+          </div>
+          <div class="card-action">Detalhes →</div>
+        </div>
+
+        <div class="donut-container">
+          <div class="donut-wrap">
+            <div class="donut">
+              <div class="donut-inner">
+                <div class="donut-value">84k</div>
+                <div class="donut-label">Total</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend">
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-dot" style="background:#6366f1;"></div>
+                Loja Online
+              </div>
+              <div class="legend-right">€38,200 <span class="legend-pct">40%</span></div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-dot" style="background:#10b981;"></div>
+                Marketplace
+              </div>
+              <div class="legend-right">€23,900 <span class="legend-pct">24%</span></div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-dot" style="background:#f59e0b;"></div>
+                Loja Física
+              </div>
+              <div class="legend-right">€14,420 <span class="legend-pct">18%</span></div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-dot" style="background:#ec4899;"></div>
+                Parceiros
+              </div>
+              <div class="legend-right">€7,800 <span class="legend-pct">18%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="bottom-row">
+
+      <!-- Table -->
+      <div class="card table-wrap">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Produtos em Destaque</div>
+            <div class="card-subtitle">Top vendas deste mês</div>
+          </div>
+          <div class="card-action">Ver todos →</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Vendas</th>
+              <th>Receita</th>
+              <th>Estado</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="product-cell">
+                  <div class="product-thumb" style="background:rgba(99,102,241,0.15);">💻</div>
+                  <div>
+                    <div class="product-name">MacBook Pro 16"</div>
+                    <div class="product-cat">Tecnologia</div>
+                  </div>
+                </div>
+              </td>
+              <td>142</td>
+              <td>€28,400</td>
+              <td><span class="status-pill success">Ativo</span></td>
+              <td>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width:78%;"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-cell">
+                  <div class="product-thumb" style="background:rgba(16,185,129,0.15);">📱</div>
+                  <div>
+                    <div class="product-name">iPhone 15 Pro</div>
+                    <div class="product-cat">Smartphones</div>
+                  </div>
+                </div>
+              </td>
+              <td>298</td>
+              <td>€41,720</td>
+              <td><span class="status-pill success">Ativo</span></td>
+              <td>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width:92%;background:linear-gradient(90deg,#10b981,#34d399);"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-cell">
+                  <div class="product-thumb" style="background:rgba(245,158,11,0.15);">🎧</div>
+                  <div>
+                    <div class="product-name">AirPods Max</div>
+                    <div class="product-cat">Áudio</div>
+                  </div>
+                </div>
+              </td>
+              <td>87</td>
+              <td>€6,525</td>
+              <td><span class="status-pill pending">Limitado</span></td>
+              <td>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width:24%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-cell">
+                  <div class="product-thumb" style="background:rgba(236,72,153,0.15);">⌚</div>
+                  <div>
+                    <div class="product-name">Apple Watch S9</div>
+                    <div class="product-cat">Wearables</div>
+                  </div>
+                </div>
+              </td>
+              <td>211</td>
+              <td>€16,880</td>
+              <td><span class="status-pill success">Ativo</span></td>
+              <td>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width:61%;background:linear-gradient(90deg,#ec4899,#f472b6);"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="product-cell">
+                  <div class="product-thumb" style="background:rgba(99,102,241,0.1);">🖥</div>
+                  <div>
+                    <div class="product-name">iMac 27" M3</div>
+                    <div class="product-cat">Desktop</div>
+                  </div>
+                </div>
+              </td>
+              <td>54</td>
+              <td>€12,150</td>
+              <td><span class="status-pill failed">Esgotado</span></td>
+              <td>
+                <div class="progress-bar-wrap">
+                  <div class="progress-bar-fill" style="width:5%;background:#ef4444;"></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Activity -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Atividade Recente</div>
+            <div class="card-subtitle">Últimas atualizações</div>
+          </div>
+          <div class="card-action">Ver mais →</div>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">JS</div>
+            <div class="activity-body">
+              <div class="activity-text"><strong>João Silva</strong> fez uma encomenda de €1,240</div>
+              <div class="activity-time">há 2 minutos</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar" style="background:linear-gradient(135deg,#10b981,#34d399);">MR</div>
+            <div class="activity-body">
+              <div class="activity-text"><strong>Maria Rodrigues</strong> subscreveu o plano Pro</div>
+              <div class="activity-time">há 15 minutos</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);">⚙</div>
+            <div class="activity-body">
+              <div class="activity-text">Sistema atualizou o stock de <strong>AirPods Max</strong></div>
+              <div class="activity-time">há 32 minutos</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar" style="background:linear-gradient(135deg,#ec4899,#f472b6);">PC</div>
+            <div class="activity-body">
+              <div class="activity-text"><strong>Pedro Costa</strong> deixou uma avaliação ⭐⭐⭐⭐⭐</div>
+              <div class="activity-time">há 1 hora</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-avatar" style="background:linear-gradient(135deg,#6366f1,#ec4899);">LF</div>
+            <div class="activity-body">
+              <div class="activity-text"><strong>Luísa Ferreira</strong> cancelou encomenda #4821</div>
+              <div class="activity-time">há 2 horas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goals -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Metas do Mês</div>
+            <div class="card-subtitle">Progresso atual</div>
+          </div>
+          <div style="font-size:12px;color:#6b7280;">Julho 2025</div>
+        </div>
+        <div class="goals-list">
+          <div class="goal-item">
+            <div class="goal-header">
+              <div class="goal-name"><span class="goal-icon">💰</span>Receita Mensal</div>
+              <div class="goal-pct">84%</div>
+            </div>
+            <div class="goal-bar-bg">
+              <div class="goal-bar-fill blue" style="width:84%;"></div>
+            </div>
+            <div class="goal-meta">€84,320 de €100,000</div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-header">
+              <div class="goal-name"><span class="goal-icon">👥</span>Novos Clientes</div>
+              <div class="goal-pct">68%</div>
+            </div>
+            <div class="goal-bar-bg">
+              <div class="goal-bar-fill green" style="width:68%;"></div>
+            </div>
+            <div class="goal-meta">342 de 500 clientes</div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-header">
+              <div class="goal-name"><span class="goal-icon">📦</span>Encomendas</div>
+              <div class="goal-pct">92%</div>
+            </div>
+            <div class="goal-bar-bg">
+              <div class="goal-bar-fill orange" style="width:92%;"></div>
+            </div>
+            <div class="goal-meta">1,248 de 1,350 encomendas</div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-header">
+              <div class="goal-name"><span class="goal-icon">⭐</span>Satisfação</div>
+              <div class="goal-pct">96%</div>
+            </div>
+            <div class="goal-bar-bg">
+              <div class="goal-bar-fill pink" style="width:96%;"></div>
+            </div>
+            <div class="goal-meta">4.8 / 5.0 estrelas</div>
+          </div>
+          <div class="goal-item">
+            <div class="goal-header">
+              <div class="goal-name"><span class="goal-icon">🔄</span>Taxa Retenção</div>
+              <div class="goal-pct">73%</div>
+            </div>
+            <div class="goal-bar-bg">
+              <div class="goal-bar-fill blue" style="width:73%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);"></div>
+            </div>
+            <div class="goal-meta">73% de 85% objetivo</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário de Contacto</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .header .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #e94560, #0f3460);
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+    }
+
+    .header h1 {
+      color: #ffffff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.95rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .form-group label span {
+      color: #e94560;
+      margin-left: 2px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .input-wrapper.textarea-wrapper .input-icon {
+      top: 16px;
+      transform: none;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      height: 50px;
+    }
+
+    .form-group textarea {
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      height: 140px;
+      resize: vertical;
+      min-height: 100px;
+      max-height: 300px;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .form-group select option {
+      background: #16213e;
+      color: #ffffff;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #e94560;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+    }
+
+    .form-group input:valid:not(:placeholder-shown),
+    .form-group textarea:valid:not(:placeholder-shown) {
+      border-color: rgba(52, 211, 153, 0.6);
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+    }
+
+    .char-hint {
+      display: block;
+      text-align: right;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 0.4rem;
+    }
+
+    .privacy-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .privacy-group input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      margin-top: 1px;
+    }
+
+    .privacy-group input[type="checkbox"]:checked {
+      background: #e94560;
+      border-color: #e94560;
+    }
+
+    .privacy-group input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .privacy-group label {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .privacy-group label a {
+      color: #e94560;
+      text-decoration: none;
+    }
+
+    .privacy-group label a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #e94560, #c73652);
+      border: none;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit;
+      box-shadow: 0 4px 20px rgba(233, 69, 96, 0.35);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(233, 69, 96, 0.5);
+      background: linear-gradient(135deg, #f05070, #e94560);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .divider span {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .contact-item {
+      padding: 1rem 0.5rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 10px;
+    }
+
+    .contact-item .ci-icon {
+      font-size: 1.3rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-item .ci-label {
+      display: block;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-item .ci-value {
+      display: block;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 500;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 1.6rem;
+      }
+
+      .contact-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <div class="icon">✉️</div>
+      <h1>Fale Connosco</h1>
+      <p>Preencha o formulário e entraremos em contacto em breve.</p>
+    </div>
+
+    <form action="#" method="POST" novalidate>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nome">Nome <span>*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="João Silva"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="given-name"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apelido">Apelido <span>*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input
+              type="text"
+              id="apelido"
+              name="apelido"
+              placeholder="Ferreira"
+              required
+              minlength="2"
+              maxlength="50"
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Endereço de Email <span>*</span></label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="joao.ferreira@exemplo.pt"
+            required
+            maxlength="100"
+            autocomplete="email"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Número de Telefone</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📞</span>
+          <input
+            type="tel"
+            id="telefone"
+            name="telefone"
+            placeholder="+351 912 345 678"
+            maxlength="20"
+            autocomplete="tel"
+            pattern="[\+]?[0-9\s\-\(\)]{7,20}"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="assunto">Assunto <span>*</span></label>
+        <div class="input-wrapper">
+          <span class="input-icon">📋</span>
+          <select id="assunto" name="assunto" required>
+            <option value="" disabled selected>Selecione um assunto...</option>
+            <option value="informacao">Pedido de Informação</option>
+            <option value="suporte">Suporte Técnico</option>
+            <option value="comercial">Proposta Comercial</option>
+            <option value="parceria">Parceria</option>
+            <option value="reclamacao">Reclamação</option>
+            <option value="outro">Outro</option>
+          </select>
+          <span class="select-arrow">▼</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="mensagem">Mensagem <span>*</span></label>
+        <div class="input-wrapper textarea-wrapper">
+          <span class="input-icon">💬</span>
+          <textarea
+            id="mensagem"
+            name="mensagem"
+            placeholder="Escreva aqui a sua mensagem detalhada..."
+            required
+            minlength="10"
+            maxlength="1000"
+          ></textarea>
+        </div>
+        <span class="char-hint">Máximo de 1000 caracteres</span>
+      </div>
+
+      <div class="privacy-group">
+        <input type="checkbox" id="privacidade" name="privacidade" required>
+        <label for="privacidade">
+          Concordo com a <a href="#">Política de Privacidade</a> e com os
+          <a href="#">Termos e Condições</a>, e autorizo o tratamento dos meus
+          dados pessoais para efeitos de resposta a esta mensagem.
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <span>📨</span>
+        <span>Enviar Mensagem</span>
+      </button>
+
+    </form>
+
+    <div class="divider">
+      <span>ou contacte-nos diretamente</span>
+    </div>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <span class="ci-icon">📍</span>
+        <span class="ci-label">Morada</span>
+        <span class="ci-value">Lisboa, Portugal</span>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">📞</span>
+        <span class="ci-label">Telefone</span>
+        <span class="ci-value">+351 210 000 000</span>
+      </div>
+      <div class="contact-item">
+        <span class="ci-icon">🕒</span>
+        <span class="ci-label">Horário</span>
+        <span class="ci-value">Seg–Sex 9h–18h</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
